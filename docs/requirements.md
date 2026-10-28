@@ -48,7 +48,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 - ⬜ Layout responsivo testado em celular e desktop
 - 🟨 Componentes visuais reaproveitados (mesmo botão, mesmo card em todas as páginas)
-- 🟨 Identidade visual própria (ver `docs/design.md`) — hero tipográfico, fontes e animações de entrada prontos
+- 🟨 Identidade visual própria (ver `docs/design.md`) — hero tipográfico, caderno de projetos, fontes e animações de entrada prontos
 
 ## 8. Performance
 
