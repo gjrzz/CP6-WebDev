@@ -101,3 +101,17 @@ export const WORKBENCH = {
   ],
   certifications: ['Bloomberg Terminal Technician'],
 };
+
+export const CONTACT = {
+  // Mão segurando o cartão em branco, recortada; o texto do cartão é código
+  photo: {
+    name: 'mao-cartao',
+    alt: 'Mão segurando um cartão',
+    width: 1280,
+    height: 1600,
+  },
+  front: "Let's build something",
+  hint: 'click to flip',
+  success: 'Mensagem enviada! Eu respondo em breve.',
+  error: 'Não foi possível enviar agora. Tente de novo em instantes.',
+};

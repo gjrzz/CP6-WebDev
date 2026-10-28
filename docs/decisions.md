@@ -137,3 +137,12 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
 - **Motion: comparei** o componente `motion` completo (~43 KB) e `LazyMotion` + `domAnimation` + `m` (~24 KB, sem drag e layout animations, que não usamos).
 - **Escolha:** `LazyMotion` com `strict` no `App`, que barra o uso do `motion` completo por engano. Medido no build: o Motion soma ~30 KB gzip ao chunk inicial, e o parallax (`useScroll`) ~3,5 KB disso. Carregar o `domAnimation` assíncrono tiraria isso do chunk inicial; fica para avaliar na tarefa de performance (#13), porque atrasaria a entrada do hero.
 - **Perdi:** atualizar as fontes passa a ser `npm update`, e não automático. O itálico do `h1` ("abriel") não tem preload e pode aparecer um instante na fonte de fallback.
+
+## 19. Formulário de contato: envio paralelo, SDKs e formulário sob demanda
+
+- **Comparei (falha parcial):** erro se qualquer uma das operações falhar (salvar no Supabase ou e-mail pelo EmailJS); sucesso se pelo menos uma funcionar.
+- **Critério:** a mensagem precisa chegar ao dono, e o visitante não deve reenviar algo que já foi salvo (duplicata no dashboard).
+- **Escolha:** as duas rodam em paralelo (`Promise.allSettled` em `useSendMessage`). É sucesso se uma funcionar (a mensagem chegou pelo dashboard ou pelo e-mail) e erro só se as duas falharem. Um campo honeypot invisível faz robôs receberem "sucesso" sem enviar nada.
+- **Comparei (carregamento):** importar Supabase, EmailJS e o formulário (React Hook Form + Zod) no bundle inicial; carregar tudo sob demanda.
+- **Escolha:** `services/messages.js` e `services/email.js` usam `import()` dinâmico, e o `ContactForm` é `React.lazy`. Tudo é pré-carregado no primeiro sinal de interesse no cartão (mouse, foco ou clique). Medido no build: o chunk inicial ficou em 155,8 KB gzip; o formulário (36 KB), o Supabase (55 KB) e o EmailJS (1,5 KB) viraram chunks separados. As duas faces do cartão têm a mesma altura mínima, então o formulário carregar no verso não move o layout.
+- **Perdi:** no sucesso parcial, o visitante não sabe que só uma das vias funcionou (o dono vê pelo dashboard ou pelo e-mail). Num primeiro clique sem hover (teclado ou toque rápido), o formulário pode levar um instante para aparecer no verso.

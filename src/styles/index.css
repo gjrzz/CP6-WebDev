@@ -16,6 +16,10 @@
   --color-page-highlight: #e8c35a;
   /* Folha de papel da bancada (CSS, não foto): tinta 15,0:1 e cinza 7,7:1 */
   --color-page-paper: #f1eee6;
+  /* Erro de formulário sobre o papel: 6,4:1 */
+  --color-page-error: #a3261b;
+  /* Erro de formulário sobre o fundo do tema (escuro 9,0:1; o claro troca abaixo) */
+  --color-danger: #ff8f80;
   --font-display: 'Fraunces Variable', Georgia, serif;
   /* Fontes do carimbo da bancada */
   --font-gothic: 'UnifrakturMaguntia', serif;
@@ -31,6 +35,8 @@
   --color-paper: #0a0a0a;
   --color-muted: #6b6b66;
   --color-accent: #a87a12;
+  /* 6,0:1 sobre o fundo claro */
+  --color-danger: #b42318;
   color-scheme: light;
 }
 

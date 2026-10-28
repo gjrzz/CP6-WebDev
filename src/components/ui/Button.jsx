@@ -3,6 +3,8 @@ import Spinner from '@/components/ui/Spinner';
 const variants = {
   primary: 'bg-paper text-ink hover:bg-accent hover:text-on-accent',
   ghost: 'border border-paper/30 text-paper hover:border-paper',
+  // Sobre papel (cartão de contato): cores fixas, iguais nos dois temas
+  ink: 'bg-page-ink text-page-paper hover:bg-page-ink/85',
 };
 
 export default function Button({

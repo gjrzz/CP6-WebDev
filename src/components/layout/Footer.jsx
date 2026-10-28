@@ -10,7 +10,8 @@ export default function Footer({ links = [] }) {
               <a
                 href={link.href}
                 {...(external && { target: '_blank', rel: 'noreferrer' })}
-                className="text-muted hover:text-paper focus-visible:outline-accent rounded transition-colors focus-visible:outline-2 focus-visible:outline-offset-4"
+                // Sublinhado cresce da esquerda no hover (scaleX, só transform)
+                className="text-muted hover:text-paper focus-visible:outline-accent relative rounded transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline-2 focus-visible:outline-offset-4 motion-reduce:after:transition-none"
               >
                 {link.label}
               </a>
