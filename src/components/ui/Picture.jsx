@@ -8,6 +8,8 @@ export default function Picture({
   sizes = '100vw',
   priority = false,
   cover = false,
+  // Com `cover`: ponto da foto que fica visível no corte (object-position, ex.: '55% 50%')
+  position,
   className = '',
 }) {
   const sources = getImageSources(name);
@@ -42,6 +44,7 @@ export default function Picture({
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : undefined}
         decoding="async"
+        style={position ? { objectPosition: position } : undefined}
         className={`${sizing} ${className}`}
       />
     </picture>
