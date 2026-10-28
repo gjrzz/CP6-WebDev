@@ -11,6 +11,13 @@ export class RateLimitError extends Error {
   }
 }
 
+export class RepoNotFoundError extends Error {
+  constructor(name) {
+    super(`Repositório "${name}" não encontrado`);
+    this.name = 'RepoNotFoundError';
+  }
+}
+
 // 403 só é limite quando a cota acabou; os outros 403 são erro comum
 function isRateLimited(response) {
   if (response.status === 429) return true;
@@ -41,15 +48,37 @@ export function toProject(repo) {
   };
 }
 
-export async function fetchRepos() {
-  const response = await fetch(
-    `${API_URL}/users/${encodeURIComponent(GITHUB_USERNAME)}/repos?sort=updated&per_page=100`,
-    { headers: { Accept: 'application/vnd.github+json' } },
-  );
+// Forks e arquivados não aparecem no portfólio, nem na listagem nem na página do projeto
+function isListed(repo) {
+  return !repo.fork && !repo.archived;
+}
 
+async function request(path) {
+  const response = await fetch(`${API_URL}${path}`, {
+    headers: { Accept: 'application/vnd.github+json' },
+  });
   if (isRateLimited(response)) throw new RateLimitError(getResetAt(response.headers));
+  return response;
+}
+
+export async function fetchRepos() {
+  const response = await request(
+    `/users/${encodeURIComponent(GITHUB_USERNAME)}/repos?sort=updated&per_page=100`,
+  );
   if (!response.ok) throw new Error(`A API do GitHub respondeu ${response.status}`);
 
   const repos = await response.json();
-  return repos.filter((repo) => !repo.fork && !repo.archived).map(toProject);
+  return repos.filter(isListed).map(toProject);
+}
+
+export async function fetchRepo(name) {
+  const response = await request(
+    `/repos/${encodeURIComponent(GITHUB_USERNAME)}/${encodeURIComponent(name)}`,
+  );
+  if (response.status === 404) throw new RepoNotFoundError(name);
+  if (!response.ok) throw new Error(`A API do GitHub respondeu ${response.status}`);
+
+  const repo = await response.json();
+  if (!isListed(repo)) throw new RepoNotFoundError(name);
+  return toProject(repo);
 }
