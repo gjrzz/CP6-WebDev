@@ -124,3 +124,16 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
 - **Critério:** Lighthouse mobile ≥ 80 sem deixar o build mais lento nem depender de serviço externo, e manter a transparência dos recortes.
 - **Escolha:** `npm run images` (`scripts/optimize-images.mjs`) lê `.png`/`.jpg`/`.jpeg` de `src/assets/raw/` (fora do Git) e gera AVIF (qualidade 50) e WebP (80) em 640 e 1280 px em `src/assets/img/` (no Git, porque a Vercel não tem os originais). Não amplia fotos menores e pula o que já está atualizado. O `components/ui/Picture` acha as versões por `import.meta.glob` (URLs com hash) e renderiza `<picture>` com `srcset`, `sizes`, `width`/`height`, `loading="lazy"` e, com `priority`, `fetchpriority="high"`. Sem a foto gerada, reserva o mesmo espaço com um SVG vazio (sem CLS) e mantém o `alt`.
 - **Perdi:** é preciso lembrar de rodar `npm run images` ao trocar uma foto, e as versões geradas aumentam o tamanho do repositório.
+
+## 18. Fontes hospedadas no site e Motion enxuto
+
+- **Fontes: comparei** Google Fonts (`<link>` para fonts.googleapis.com) e self-host com Fontsource (`@fontsource-variable/fraunces` e `@fontsource/jetbrains-mono`).
+- **Critério:** Lighthouse mobile ≥ 80 e privacidade do visitante.
+  - **Bloqueio de renderização:** o CSS do Google Fonts é uma folha externa que bloqueia o primeiro render até chegar. Com o Fontsource, os `@font-face` entram no CSS do próprio site.
+  - **Conexões extras:** o Google exige DNS + TLS para dois domínios (`fonts.googleapis.com` e `fonts.gstatic.com`), mesmo com `preconnect`. No self-host, as fontes vêm do mesmo domínio e da mesma conexão HTTP/2.
+  - **Privacidade:** cada visita mandaria o IP do visitante ao Google (em 2022 um tribunal de Munique considerou isso violação do GDPR; a LGPD tem princípios parecidos). Self-host não envia nada a terceiros.
+  - **Cache entre sites** do Google não existe mais: os navegadores particionam o cache por site desde 2020.
+- **Escolha:** Fontsource, importando só o eixo de peso da Fraunces (normal e itálico, `font-display: swap`) e o 400 latino da JetBrains Mono. Os subsets são separados por `unicode-range`, e o navegador baixa só o `latin` (~37 KB normal e ~46 KB itálico). O woff2 normal latino da Fraunces, usado no `h1`, recebe `<link rel="preload">` injetado no build por um plugin no `vite.config.js` (o nome tem hash). Só ele é pré-carregado para não competir com a imagem do hero. A gótica, a bubble e a de pincel ficam para a bancada.
+- **Motion: comparei** o componente `motion` completo (~43 KB) e `LazyMotion` + `domAnimation` + `m` (~24 KB, sem drag e layout animations, que não usamos).
+- **Escolha:** `LazyMotion` com `strict` no `App`, que barra o uso do `motion` completo por engano. Medido no build: o Motion soma ~30 KB gzip ao chunk inicial, e o parallax (`useScroll`) ~3,5 KB disso. Carregar o `domAnimation` assíncrono tiraria isso do chunk inicial; fica para avaliar na tarefa de performance (#13), porque atrasaria a entrada do hero.
+- **Perdi:** atualizar as fontes passa a ser `npm update`, e não automático. O itálico do `h1` ("abriel") não tem preload e pode aparecer um instante na fonte de fallback.
