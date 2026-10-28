@@ -36,7 +36,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 ## 5. Dashboard do dono
 
-- ⬜ Acesso protegido por login, redirecionando quem não está autenticado
+- ✅ Acesso protegido por login, redirecionando quem não está autenticado (`ProtectedRoute`, decisão 20)
 - ⬜ Lista das mensagens recebidas, com opção de marcar como respondida
 - ⬜ Seleção dos projetos em destaque na home
 
@@ -54,14 +54,14 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 - ⬜ Lighthouse mobile ≥ 80 em performance
 - 🟨 Imagens otimizadas (WebP/AVIF, tamanho certo, lazy) — pipeline e `Picture` prontos; faltam as fotos
-- 🟨 Dashboard e elementos pesados carregados sob demanda (`React.lazy`) — formulário, Supabase e EmailJS prontos (decisão 19); falta o dashboard
+- ✅ Dashboard e elementos pesados carregados sob demanda (`React.lazy`): login, dashboard, formulário, Supabase e EmailJS em chunks próprios (decisões 19 e 20)
 - 🟨 Sem saltos de layout (CLS) — skeleton com a mesma altura do card
 - ✅ Sem requisições repetidas à API do GitHub ao navegar (cache do TanStack Query + `localStorage`; a página do projeto reaproveita a listagem)
 
 ## 9. Testes
 
 - ✅ Validação do formulário de contato (`contactSchema.test.js`, `ContactForm.test.jsx`)
-- ⬜ Bloqueio do dashboard sem login
+- ✅ Bloqueio do dashboard sem login (`ProtectedRoute.test.jsx`)
 - ✅ Rota inexistente exibe 404 (`NotFoundPage.test.jsx`)
 
 ## 10. Deploy
