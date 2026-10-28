@@ -11,7 +11,7 @@ vi.mock('@/hooks/useSendMessage', async (importOriginal) => ({
 }));
 
 function renderCard() {
-  render(
+  return render(
     <QueryClientProvider client={new QueryClient()}>
       <LazyMotion features={domAnimation} strict>
         <ContactCard />
@@ -49,5 +49,14 @@ describe('ContactCard', () => {
     const name = await screen.findByLabelText('Nome');
     expect(name.closest('[inert]')).toBeNull();
     await waitFor(() => expect(name).toHaveFocus());
+  });
+
+  it('a caneta é só decoração: fora do leitor de tela e sem bloquear cliques', () => {
+    const { container } = renderCard();
+    const pen = container.querySelector('img[src*="pen-"]');
+
+    expect(pen).toHaveAttribute('alt', '');
+    const wrapper = pen.closest('[aria-hidden="true"]');
+    expect(wrapper).toHaveClass('pointer-events-none');
   });
 });
