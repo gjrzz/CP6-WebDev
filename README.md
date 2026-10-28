@@ -57,6 +57,13 @@ As três fotos do hero precisam ter a mesma proporção, porque se alternam no m
 2. Rode `supabase/migrations/0001_init.sql` no SQL Editor.
 3. Desative o cadastro público e crie seu usuário em **Authentication**.
 
+### E-mail do formulário (EmailJS)
+
+1. Crie um serviço de e-mail e um template no EmailJS.
+2. No template, use as variáveis `{{name}}`, `{{email}}`, `{{message}}` e `{{time}}` (data e hora do envio em pt-BR).
+3. Para o "Responder" ir direto ao visitante, configure o campo **Reply To** do template como `{{email}}`.
+4. Preencha `VITE_EMAILJS_SERVICE_ID`, `VITE_EMAILJS_TEMPLATE_ID` e `VITE_EMAILJS_PUBLIC_KEY` no `.env` e na Vercel.
+
 ## Scripts
 
 | Script                            | Descrição                            |
