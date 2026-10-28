@@ -3,12 +3,32 @@
 export const HERO = {
   sentence:
     'Gabriel is a São Paulo-based IT Analyst and developer, who builds tools, automations and systems.',
-  // Mesma proporção 4:5 das fotos (ver README, seção "Imagens")
-  photoSize: { width: 640, height: 800 },
+  // Moldura das fotos (paisagem, como a referência). Cada foto preenche a moldura cortando as
+  // sobras (object-fit: cover); `focus` é o ponto que fica visível no corte.
+  frame: { width: 4, height: 3 },
+  // width/height são os tamanhos reais dos originais em src/assets/raw (atributos do <img>)
   photos: [
-    { name: 'hero-skate', alt: 'Gabriel andando de skate em São Paulo' },
-    { name: 'hero-trampo', alt: 'Gabriel trabalhando no computador' },
-    { name: 'hero-setup', alt: 'Setup de trabalho do Gabriel' },
+    {
+      name: 'hero-skate',
+      alt: 'Gabriel saltando de skate em frente a um prédio',
+      width: 864,
+      height: 445,
+      focus: '50% 50%',
+    },
+    {
+      name: 'hero-trampo',
+      alt: 'Prédio de escritórios em São Paulo visto de baixo, entre árvores',
+      width: 1600,
+      height: 1400,
+      focus: '50% 40%',
+    },
+    {
+      name: 'hero-setup',
+      alt: 'Setup de trabalho do Gabriel com dois monitores e PC iluminado',
+      width: 1280,
+      height: 960,
+      focus: '50% 50%',
+    },
   ],
 };
 
@@ -110,6 +130,8 @@ export const CONTACT = {
     width: 1280,
     height: 1600,
   },
+  // Caneta apoiada no canto do cartão (decorativa: alt vazio)
+  pen: { name: 'pen', width: 1024, height: 1024 },
   front: "Let's build something",
   hint: 'click to flip',
   success: 'Mensagem enviada! Eu respondo em breve.',
