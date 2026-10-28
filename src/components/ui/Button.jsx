@@ -9,13 +9,25 @@ export default function Button({
   variant = 'primary',
   loading = false,
   disabled,
+  href,
   className = '',
   children,
   ...props
 }) {
+  const classes = `inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`;
+
+  // Com href vira link externo com o mesmo visual (loading e disabled não se aplicam)
+  if (href) {
+    return (
+      <a href={href} className={classes} {...props}>
+        {children}
+      </a>
+    );
+  }
+
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${variants[variant]} ${className}`}
+      className={classes}
       disabled={disabled || loading}
       aria-busy={loading || undefined}
       {...props}

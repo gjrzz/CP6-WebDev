@@ -11,14 +11,14 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 ## 1. Rotas
 
-- ⬜ Link individual para cada projeto (`/projetos/:slug`)
-- ⬜ Página amigável para rota inexistente (404) — base pronta em `NotFoundPage`
-- 🟨 Página amigável para falha no carregamento da API (`ErrorState` com retry na seção de projetos)
+- ✅ Link individual para cada projeto (`/projetos/:slug`)
+- ✅ Página amigável para rota inexistente (404), inclusive para repositório inexistente em `/projetos/:slug`
+- 🟨 Página amigável para falha no carregamento da API (`ErrorState` com retry na home e na página do projeto)
 - ⬜ Link compartilhado abre direto na página certa, inclusive com F5 (`vercel.json` com rewrite)
 
 ## 2. Estados de carregamento
 
-- 🟨 Todo dado de API exibe carregando, erro e lista vazia (projetos do GitHub prontos)
+- 🟨 Todo dado de API exibe carregando, erro e lista vazia (listagem e página do projeto prontas)
 - 🟨 Indicador visual enquanto carrega (skeleton nos cards, spinner no envio do formulário)
 - ⬜ Botão de enviar bloqueado durante o envio
 
@@ -56,7 +56,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 - ⬜ Imagens otimizadas (WebP/AVIF, tamanho certo, lazy)
 - ⬜ Dashboard e elementos pesados carregados sob demanda (`React.lazy`)
 - 🟨 Sem saltos de layout (CLS) — skeleton com a mesma altura do card
-- ✅ Sem requisições repetidas à API do GitHub ao navegar (cache do TanStack Query + `localStorage`)
+- ✅ Sem requisições repetidas à API do GitHub ao navegar (cache do TanStack Query + `localStorage`; a página do projeto reaproveita a listagem)
 
 ## 9. Testes
 
