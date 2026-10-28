@@ -129,7 +129,7 @@ No celular, o caderno já abre direto em uma lista vertical, sem a animação 3D
 Anime só transform e opacity.
 ```
 
-Animações combinadas: no hover, o caderno inclina de leve (`rotate: -2deg`) e cresce, como adesivo descolando; ao abrir, os cards entram em stagger reaproveitando o `Reveal`.
+Animações combinadas: no hover, o caderno inclina de leve (`rotate: -2deg`) e cresce, como adesivo descolando; ao abrir, os cards entram em stagger reaproveitando o `Reveal`. Ajuste posterior (`feature/notebook-scroll`): no desktop, a capa entra pelo canto direito (inclinada e menor) e desliza até o centro acompanhando a rolagem (`useScroll` + `useTransform`, sem scroll-jacking); com reduced motion, já fica no centro.
 
 ### 8. `feature/workbench` — bancada e stack · req. 7
 
