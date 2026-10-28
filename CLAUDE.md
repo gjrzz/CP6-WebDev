@@ -14,7 +14,7 @@ As justificativas das escolhas de stack ficam em `docs/decisions.md`: consulte a
 ## Regras inegociáveis
 
 1. **Nunca trabalhe na `main`.** Toda tarefa começa numa branch `tipo/descricao` (ver `docs/conventions.md`). Um hook bloqueia `git commit` e `git push` na `main`.
-2. **Commits em Conventional Commits, em português**, pequenos e com um propósito só. O commitlint rejeita mensagens fora do padrão.
+2. **Os commits e pushes são feitos pelo Gabriel.** Você nunca roda `git add`, `git commit` nem `git push` (só cria a branch da tarefa com `git switch -c`). Ao final de cada tarefa, entregue um **plano de commits** com a skill `/commit`: commits em Conventional Commits, em português, pequenos e com um propósito só (o commitlint rejeita mensagens fora do padrão).
 3. **JavaScript (.js/.jsx), sem TypeScript.** Imports internos sempre com o alias `@/`.
 4. **Lógica fora dos componentes visuais.** Chamada de API vai em `src/services/`, estado e efeitos em `src/hooks/`. Componente em `pages/` e `components/` só monta a tela.
 5. **Todo dado assíncrono tem 3 estados na tela:** carregando (skeleton), erro e lista vazia.
@@ -47,7 +47,7 @@ Depois atualize o status do requisito em `docs/requirements.md`.
 ## Skills e agentes do projeto
 
 - `/feature <descrição>`: fluxo completo de uma funcionalidade (branch → plano → código → testes → commits).
-- `/commit`: agrupa as mudanças e gera commits no padrão.
+- `/commit`: agrupa as mudanças e entrega o plano de commits (comandos para o Gabriel colar), sem commitar.
 - `/component <Nome>`: cria componente seguindo a arquitetura.
 - Agente `code-reviewer`: revisa o diff contra a arquitetura e as convenções. Use antes de abrir PR.
 - Agente `requirements-checker`: confere o que falta para cumprir os requisitos do CP.

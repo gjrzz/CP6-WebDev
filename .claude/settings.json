@@ -11,11 +11,18 @@
       "Bash(git diff:*)",
       "Bash(git log:*)",
       "Bash(git branch:*)",
-      "Bash(git switch:*)",
-      "Bash(git add:*)"
+      "Bash(git switch:*)"
     ],
-    "ask": ["Bash(git push:*)", "Bash(npm install:*)", "Bash(npm i:*)"],
-    "deny": ["Read(./.env)", "Read(./.env.*)", "Bash(git push --force:*)", "Bash(git push -f:*)"]
+    "ask": ["Bash(npm install:*)", "Bash(npm i:*)"],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)"
+    ]
   },
   "hooks": {
     "PreToolUse": [
