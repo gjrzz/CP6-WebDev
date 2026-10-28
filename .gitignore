@@ -11,3 +11,6 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 .claude/settings.local.json
+
+# Fotos originais (só as versões geradas em src/assets/img vão para o Git)
+src/assets/raw/
