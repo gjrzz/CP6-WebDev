@@ -74,7 +74,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 - ✅ Padrão de commits definido e verificado (Conventional Commits + commitlint)
 - ✅ Estratégia de branches definida (GitHub Flow, ver `docs/conventions.md`)
 - ✅ Padrões descritos no README e nas instruções da IA (`CLAUDE.md`)
-- ⬜ Proteção da branch `main` no GitHub (exigir PR + CI)
+- ✅ Proteção da branch `main` no GitHub (exigir PR + CI): ruleset ativo com pull request obrigatório, check `check` do CI obrigatório, force push e exclusão bloqueados
 
 ## 12. Arquitetura e padronização
 
