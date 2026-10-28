@@ -99,3 +99,14 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
 - **Critério:** controle e revisão de cada commit antes de entrar no histórico (o histórico é avaliado e vou ter que explicá-lo).
 - **Escolha:** eu faço todos os commits e pushes. A IA só cria a branch da tarefa e, no fim, entrega um plano de commits (skill `/commit`) com os comandos prontos para colar. `git add`, `git commit` e `git push` ficam no `deny` do `.claude/settings.json`.
 - **Perdi:** velocidade: cada tarefa termina com um passo manual meu em vez de commits automáticos.
+
+## 15. Tema claro/escuro: troca de tokens por `data-theme`
+
+- **Comparei:** variante `dark:` do Tailwind em cada componente; redefinir os valores dos tokens (`ink`, `paper`, `muted`, `accent`) sob `[data-theme='light']`.
+- **Critério:** não duplicar classes nos componentes e não piscar o tema errado no carregamento.
+- **Escolha:** os tokens são semânticos (`ink` = fundo, `paper` = texto) e trocam de valor no tema claro. Um script inline no `index.html` aplica o `data-theme` antes do React (salvo no `localStorage` → `prefers-color-scheme`). O `ThemeContext` só grava no `localStorage` quando o visitante escolhe; até lá, vale a preferência do sistema. Novo token `on-accent` (`#0a0a0a`, fixo) para texto sobre o amarelo, que no tema claro ficaria ilegível com `text-ink`.
+- **Contrastes do tema claro** (fundo `#f5f5f0`):
+  - `accent` `#a87a12`: 3,5:1 sobre o fundo (≥ 3:1 para anel de foco e elementos de interface). O amarelo do tema escuro, `#e8c35a`, daria ~1,6:1.
+  - `on-accent` `#0a0a0a` sobre `#a87a12`: 5,2:1 (≥ 4,5:1 para texto).
+  - `muted` `#6b6b66`: 4,9:1 (≥ 4,5:1 para texto). O `#8a8a85` do tema escuro daria só 3,2:1.
+- **Perdi:** o amarelo da marca não é idêntico nos dois temas, e a regra de leitura do tema existe em dois lugares (script inline e `src/lib/theme.js`), que precisam ficar em sincronia.

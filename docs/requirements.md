@@ -42,7 +42,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 ## 6. Preferências do visitante
 
-- ⬜ Tema claro/escuro persistido entre visitas
+- ✅ Tema claro/escuro persistido entre visitas
 
 ## 7. Interface
 
