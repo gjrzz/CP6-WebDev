@@ -153,3 +153,14 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
 - **Critério:** o `getSession()` baixa o Supabase (~55 KB gzip). No `App`, isso aconteceria em toda visita à home, desfazendo o carregamento sob demanda da decisão 19. Só o dono usa a sessão.
 - **Escolha:** `components/layout/AuthLayout` (rota sem caminho) com `AuthProvider`, `Suspense` e `<meta name="robots" content="noindex">` (o React 19 leva o meta para o `<head>`). `LoginPage` e `DashboardPage` são `React.lazy` (em `app/lazyPages.js`, por causa do Fast Refresh). `ProtectedRoute` mostra um spinner até a primeira leitura da sessão e só então redireciona, guardando a origem para o login voltar para ela.
 - **Perdi:** o resto do site não sabe se o dono está logado (ex.: não dá para mostrar um link "dashboard" no cabeçalho só para ele sem carregar o Supabase).
+
+## 21. Destaques: leitura pública por REST, sem o SDK
+
+- **Comparei:** ler `featured_projects` pelo `supabase-js` (o mesmo cliente do dashboard); ler pela API REST do Supabase com `fetch`.
+- **Critério:** a home precisa dos destaques em toda visita. Pelo SDK, ela voltaria a baixar ~55 KB gzip que as decisões 19 e 20 tiraram dela.
+- **Escolha:**
+  - **Leitura:** `GET /rest/v1/featured_projects?select=repo_name,position&order=position` com `fetch`. A chave publishable (`sb_publishable_…`) não é JWT, então vai **só** no cabeçalho `apikey`, sem `Authorization: Bearer` (documentação do Supabase sobre as novas API keys). Testado contra o projeto real: leitura anônima responde 200; escrita anônima responde 401 (RLS + GRANTs).
+  - **Escrita** (só no dashboard): pelo SDK, que já está carregado ali. A nova posição é `max(position) + 1`, para não repetir posição depois de remover um item do meio.
+  - **Sem travar o caderno:** os destaques ficam no `localStorage`, como os repositórios (decisão 16), e voltam como `initialData`. Sem cache, `useHomeProjects` espera no máximo 1,5 s; depois mostra a ordem padrão (os 3 mais recentes) e reordena quando os destaques chegarem. Se a leitura falhar, fica a ordem padrão.
+  - `services/config.js` valida `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (vazia, espaço ou quebra de linha) com mensagem clara no console. É o que teria mostrado na hora o erro do deploy em que a chave foi colada 5 vezes.
+- **Perdi:** a leitura dos destaques não tem os tipos nem os helpers do SDK (a URL da consulta é montada à mão), e sem cache a lista pode reordenar uma vez depois de 1,5 s.
