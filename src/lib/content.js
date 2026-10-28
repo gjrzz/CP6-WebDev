@@ -124,14 +124,36 @@ export const DECOR = {
     caution: ['ride on', 'build', 'automate', 'ship'],
     masking: ['tools', 'automations', 'systems'],
   },
-  // tone: highlight (amarelo), paper (papel) ou ink (tinta); font: gothic, bubble, brush
+  // Palavras grandes nas margens. tone: highlight (amarelo), paper (cor do texto) ou
+  // ink (só contorno); font: gothic, bubble, brush; size: lg (padrão) ou xl;
+  // outline: contorno preto fino (usado nas que ficam sobre as fitas)
   stickers: {
-    afterHero: [{ text: 'ride on', font: 'brush', tone: 'highlight', side: 'right', tilt: 8 }],
+    afterHero: [
+      {
+        text: 'ride on',
+        font: 'brush',
+        tone: 'highlight',
+        size: 'xl',
+        outline: true,
+        side: 'right',
+        tilt: 8,
+      },
+    ],
     afterProjects: [
-      { text: '90s kid', font: 'bubble', tone: 'paper', side: 'left', tilt: -10 },
+      { text: "00's kid", font: 'bubble', tone: 'paper', side: 'left', tilt: -10 },
       { text: 'build stuff', font: 'gothic', tone: 'ink', side: 'right', tilt: 6 },
     ],
-    beforeContact: [{ text: 'grind', font: 'brush', tone: 'paper', side: 'left', tilt: -7 }],
+    beforeContact: [
+      {
+        text: 'grind',
+        font: 'brush',
+        tone: 'paper',
+        size: 'xl',
+        outline: true,
+        side: 'left',
+        tilt: -7,
+      },
+    ],
   },
   scribbles: {
     toProjects: 'my stuff',
