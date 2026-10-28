@@ -65,4 +65,12 @@ describe('Picture', () => {
     expect(placeholder).toHaveAttribute('viewBox', '0 0 800 1000');
     expect(container.querySelector('picture')).not.toBeInTheDocument();
   });
+
+  it('com cover, preenche a moldura e respeita o ponto de foco do corte', () => {
+    renderPicture({ cover: true, position: '55% 50%' });
+    const img = screen.getByRole('img');
+
+    expect(img).toHaveClass('object-cover');
+    expect(img).toHaveStyle({ objectPosition: '55% 50%' });
+  });
 });
