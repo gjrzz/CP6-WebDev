@@ -18,7 +18,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 ## 2. Estados de carregamento
 
-- 🟨 Todo dado de API exibe carregando, erro e lista vazia (projetos, página do projeto e mensagens do dashboard prontos; faltam os destaques)
+- ✅ Todo dado de API exibe carregando, erro e lista vazia (projetos, página do projeto, mensagens e destaques)
 - ✅ Indicador visual enquanto carrega (skeleton nos cards, spinner no envio do formulário)
 - ✅ Botão de enviar bloqueado durante o envio (`ContactForm.test.jsx`)
 
@@ -38,7 +38,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 - ✅ Acesso protegido por login, redirecionando quem não está autenticado (`ProtectedRoute`, decisão 20)
 - ✅ Lista das mensagens recebidas, com opção de marcar como respondida (filtro por status na URL, atualização otimista; cache limpo ao sair)
-- ⬜ Seleção dos projetos em destaque na home
+- ✅ Seleção dos projetos em destaque na home (decisão 21)
 
 ## 6. Preferências do visitante
 
