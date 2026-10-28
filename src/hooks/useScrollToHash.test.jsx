@@ -15,13 +15,21 @@ function renderAt(url) {
 }
 
 function mockReducedMotion(matches) {
-  window.matchMedia = vi.fn().mockReturnValue({ matches });
+  vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches }));
 }
 
 describe('useScrollToHash', () => {
+  // jsdom não implementa scrollIntoView nem matchMedia: os mocks são desfeitos ao fim
+  // de cada teste para não vazarem para outros arquivos
+  const originalScrollIntoView = Element.prototype.scrollIntoView;
+
   beforeEach(() => {
-    // jsdom não implementa scrollIntoView nem matchMedia
     Element.prototype.scrollIntoView = vi.fn();
+  });
+
+  afterEach(() => {
+    Element.prototype.scrollIntoView = originalScrollIntoView;
+    vi.unstubAllGlobals();
   });
 
   it('rola suave até a âncora da url', () => {
