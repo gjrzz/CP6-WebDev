@@ -110,3 +110,10 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
   - `on-accent` `#0a0a0a` sobre `#a87a12`: 5,2:1 (≥ 4,5:1 para texto).
   - `muted` `#6b6b66`: 4,9:1 (≥ 4,5:1 para texto). O `#8a8a85` do tema escuro daria só 3,2:1.
 - **Perdi:** o amarelo da marca não é idêntico nos dois temas, e a regra de leitura do tema existe em dois lugares (script inline e `src/lib/theme.js`), que precisam ficar em sincronia.
+
+## 16. Limite de requisições do GitHub: erro próprio + cache no `localStorage`
+
+- **Comparei:** só o cache em memória do TanStack Query; um backend/proxy com token; cache em memória + última lista salva no `localStorage`.
+- **Critério:** sem token, a API do GitHub permite 60 requisições por hora por IP, e o projeto não tem backend próprio (fora do escopo). O visitante não pode ver a seção vazia porque a cota acabou.
+- **Escolha:** o `services/github.js` lança `RateLimitError` (com o horário de reset) só no 429 ou no 403 com `x-ratelimit-remaining: 0`; outros 403 são erro comum. Cada busca bem-sucedida grava a lista já mapeada (`{ name, description, language, updatedAt, htmlUrl, homepage, topics, stars }`) no `localStorage`, que volta como `initialData` + `initialDataUpdatedAt` do `useQuery`: com menos de 10 min nem chama a API. No erro de limite com cache, os cards salvos aparecem com um aviso discreto; sem cache, `ErrorState` com o horário de reset. O hook não repete a requisição quando o erro é de limite.
+- **Perdi:** a lista salva pode estar desatualizada enquanto o limite durar, e ela ocupa alguns KB no `localStorage` do visitante.

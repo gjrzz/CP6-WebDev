@@ -13,20 +13,20 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 - ⬜ Link individual para cada projeto (`/projetos/:slug`)
 - ⬜ Página amigável para rota inexistente (404) — base pronta em `NotFoundPage`
-- ⬜ Página amigável para falha no carregamento da API
+- 🟨 Página amigável para falha no carregamento da API (`ErrorState` com retry na seção de projetos)
 - ⬜ Link compartilhado abre direto na página certa, inclusive com F5 (`vercel.json` com rewrite)
 
 ## 2. Estados de carregamento
 
-- ⬜ Todo dado de API exibe carregando, erro e lista vazia
+- 🟨 Todo dado de API exibe carregando, erro e lista vazia (projetos do GitHub prontos)
 - 🟨 Indicador visual enquanto carrega (skeleton nos cards, spinner no envio do formulário)
 - ⬜ Botão de enviar bloqueado durante o envio
 
 ## 3. Integração com o GitHub
 
-- ⬜ Projetos carregados pela API do GitHub, sem cadastro manual
-- ⬜ Cada card exibe descrição, linguagem e data da última atualização
-- ⬜ Tratamento do limite de requisições da API (403/429 → mensagem + cache)
+- ✅ Projetos carregados pela API do GitHub, sem cadastro manual
+- ✅ Cada card exibe descrição, linguagem e data da última atualização
+- ✅ Tratamento do limite de requisições da API (403/429 → mensagem + cache, ver decisão 16)
 
 ## 4. Formulário de contato
 
@@ -55,8 +55,8 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 - ⬜ Lighthouse mobile ≥ 80 em performance
 - ⬜ Imagens otimizadas (WebP/AVIF, tamanho certo, lazy)
 - ⬜ Dashboard e elementos pesados carregados sob demanda (`React.lazy`)
-- ⬜ Sem saltos de layout (CLS)
-- ⬜ Sem requisições repetidas à API do GitHub ao navegar (cache do TanStack Query)
+- 🟨 Sem saltos de layout (CLS) — skeleton com a mesma altura do card
+- ✅ Sem requisições repetidas à API do GitHub ao navegar (cache do TanStack Query + `localStorage`)
 
 ## 9. Testes
 
