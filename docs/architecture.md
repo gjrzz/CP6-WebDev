@@ -48,11 +48,14 @@ src/
 ## Fluxo de dados
 
 ```
-GitHub REST API ──▶ services/github.js ──▶ hooks/useGithubRepos (TanStack Query, cache 10 min)
+GitHub REST API ──▶ services/github.js ──▶ hooks/useGithubRepos (TanStack Query, cache 10 min + localStorage)
                                                       │
-Supabase (featured_projects) ──▶ hooks/useFeatured ───┼──▶ pages/HomePage ──▶ components/ui/ProjectCard
-                                                      │
+                                                      ├──▶ hooks/useHomeProjects ──▶ sections/ProjectsNotebook
+Supabase REST (featured_projects, sem SDK)            │      (destaques primeiro; espera no máx. 1,5 s)
+  ──▶ services/featured.js ──▶ hooks/useFeatured ─────┘
                                                       └──▶ pages/ProjectPage (/projetos/:slug)
+
+Dashboard: FeaturedPanel ──▶ hooks/useToggleFeatured ──▶ services/featured.js (SDK, autenticado)
 
 ContactForm ──▶ lib/contactSchema (Zod) ──▶ hooks/useSendMessage
                                               ├──▶ services/messages.js → Supabase (tabela messages)
