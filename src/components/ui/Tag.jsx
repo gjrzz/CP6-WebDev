@@ -1,6 +1,6 @@
 const variants = {
   default: 'bg-paper/10 text-paper',
-  accent: 'bg-accent text-ink',
+  accent: 'bg-accent text-on-accent',
 };
 
 export default function Tag({ variant = 'default', className = '', ...props }) {
