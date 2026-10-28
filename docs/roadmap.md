@@ -162,6 +162,8 @@ Testes: mensagens de erro por campo ao enviar vazio/inválido; botão desabilita
 
 Animações combinadas: a mão com o cartão sobe de baixo ao entrar na tela; o cartão flutua de leve em loop (`y` ±4px) até o hover. No rodapé, sublinhado dos links crescendo com `scaleX`. Evitar: cursor customizado, scroll-jacking e transição entre páginas.
 
+Detalhes da rolagem (`feature/scroll-details`, depois das funcionalidades): mini skate descendo pela borda direita como indicador de progresso (inclina com a velocidade), fitas com texto deslizando entre seções, adesivos próprios (sem logos de marca) que "colam" nas margens e rabiscos à mão apontando para projetos e contato. Tudo `aria-hidden`, só `transform`/`opacity`/`pathLength`, estático com reduced motion; adesivos, rabiscos e skate só no desktop.
+
 ### 10. `feature/auth` — login e rota protegida · req. 5, 8, 9
 
 ```
