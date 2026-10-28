@@ -14,7 +14,13 @@
   --color-page-muted: #4a4a45;
   /* Marca-texto do "destaque"; a tinta por cima dá 10,3:1 */
   --color-page-highlight: #e8c35a;
+  /* Folha de papel da bancada (CSS, não foto): tinta 15,0:1 e cinza 7,7:1 */
+  --color-page-paper: #f1eee6;
   --font-display: 'Fraunces Variable', Georgia, serif;
+  /* Fontes do carimbo da bancada */
+  --font-gothic: 'UnifrakturMaguntia', serif;
+  --font-bubble: 'Rubik Bubbles', system-ui, sans-serif;
+  --font-brush: 'Permanent Marker', cursive;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
