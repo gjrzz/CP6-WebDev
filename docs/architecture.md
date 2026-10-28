@@ -27,7 +27,8 @@ src/
 │   ├── ui/         # Peças genéricas e reaproveitáveis: Button, Card, Skeleton, Input…
 │   ├── layout/     # Estrutura comum: RootLayout, Header, Footer, AuthLayout, ProtectedRoute
 │   ├── sections/   # Blocos grandes da home: Hero, ProjectsNotebook, Workbench, ContactCard
-│   └── dashboard/  # Blocos do dashboard: MessagesPanel, MessageItem
+│   ├── dashboard/  # Blocos do dashboard: MessagesPanel, MessageItem, FeaturedPanel
+│   └── decor/      # Decoração da rolagem (aria-hidden): SkateProgress, TapeBand, Sticker, SectionBreak
 ├── hooks/          # Lógica e estado: useGithubRepos, useTheme, useAuth, useMessages…
 ├── services/       # Acesso externo puro (sem React): github.js, supabase.js, auth.js, messages.js, email.js
 ├── contexts/       # Contextos globais: ThemeContext, AuthContext

@@ -115,3 +115,26 @@ export const CONTACT = {
   success: 'Mensagem enviada! Eu respondo em breve.',
   error: 'Não foi possível enviar agora. Tente de novo em instantes.',
 };
+
+// Detalhes que surgem com a rolagem (fitas, adesivos, rabiscos). Só decoração:
+// tudo fica escondido do leitor de tela.
+export const DECOR = {
+  tapes: {
+    // Fita amarela entre o hero e o caderno; a de papel entre a bancada e o contato
+    caution: ['ride on', 'build', 'automate', 'ship'],
+    masking: ['tools', 'automations', 'systems'],
+  },
+  // tone: highlight (amarelo), paper (papel) ou ink (tinta); font: gothic, bubble, brush
+  stickers: {
+    afterHero: [{ text: 'ride on', font: 'brush', tone: 'highlight', side: 'right', tilt: 8 }],
+    afterProjects: [
+      { text: '90s kid', font: 'bubble', tone: 'paper', side: 'left', tilt: -10 },
+      { text: 'build stuff', font: 'gothic', tone: 'ink', side: 'right', tilt: 6 },
+    ],
+    beforeContact: [{ text: 'grind', font: 'brush', tone: 'paper', side: 'left', tilt: -7 }],
+  },
+  scribbles: {
+    toProjects: 'my stuff',
+    toContact: 'say hi',
+  },
+};
