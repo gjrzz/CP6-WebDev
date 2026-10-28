@@ -1,8 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
+import { getSupabaseConfig } from '@/services/config';
 
 // Cliente único. Importe este módulo com import() dinâmico: o supabase-js (~50 KB gzip)
 // fica fora do chunk inicial e só é baixado quando alguém vai usá-lo.
-export const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY,
-);
+const { url, key } = getSupabaseConfig();
+export const supabase = createClient(url, key);

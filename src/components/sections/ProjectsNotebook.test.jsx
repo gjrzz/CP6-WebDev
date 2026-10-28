@@ -6,12 +6,15 @@ import { LazyMotion, domAnimation } from 'motion/react';
 import ProjectsNotebook from '@/components/sections/ProjectsNotebook';
 import { GITHUB_REPOS_KEY } from '@/hooks/useGithubRepos';
 import { fetchRepos, RateLimitError } from '@/services/github';
+import { fetchFeatured } from '@/services/featured';
 import { formatTime } from '@/lib/formatDate';
 
 vi.mock('@/services/github', async (importOriginal) => ({
   ...(await importOriginal()),
   fetchRepos: vi.fn(),
 }));
+
+vi.mock('@/services/featured', () => ({ fetchFeatured: vi.fn() }));
 
 function makeProject(name) {
   return {
@@ -57,6 +60,8 @@ const coverButton = () => screen.getByRole('button', { name: /abrir caderno de p
 beforeEach(() => {
   localStorage.clear();
   vi.mocked(fetchRepos).mockReset();
+  // Sem destaques escolhidos: a home usa os 3 mais recentes
+  vi.mocked(fetchFeatured).mockReset().mockResolvedValue([]);
   desktop = true;
   stubMedia();
 });
@@ -175,14 +180,36 @@ describe('ProjectsNotebook abaixo de 1024px', () => {
   });
 
   it('usa o cache salvo sem chamar a API quando ele tem menos de 10 min', () => {
-    localStorage.setItem(
-      'github-repos',
-      JSON.stringify({ repos: projects, savedAt: Date.now() - 1000 * 60 }),
-    );
+    const savedAt = Date.now() - 1000 * 60;
+    localStorage.setItem('github-repos', JSON.stringify({ repos: projects, savedAt }));
+    localStorage.setItem('github-featured', JSON.stringify({ names: ['delta'], savedAt }));
     renderNotebook();
 
-    expect(screen.getByRole('link', { name: 'alfa' })).toBeInTheDocument();
+    // Na hora, já na ordem dos destaques salvos
+    expect(screen.getAllByRole('link')[0]).toHaveTextContent('delta');
     expect(fetchRepos).not.toHaveBeenCalled();
+    expect(fetchFeatured).not.toHaveBeenCalled();
+  });
+
+  it('coloca os destaques do dashboard primeiro, na ordem escolhida', async () => {
+    vi.mocked(fetchRepos).mockResolvedValue(projects);
+    vi.mocked(fetchFeatured).mockResolvedValue(['epsilon', 'beta']);
+    renderNotebook();
+
+    await screen.findByRole('link', { name: 'epsilon' });
+    const links = screen.getAllByRole('link').map((link) => link.textContent);
+    expect(links).toEqual(['epsilon', 'beta', 'alfa', 'gama', 'delta']);
+    expect(screen.getAllByText('destaque')).toHaveLength(2);
+  });
+
+  it('se os destaques falharem, usa os 3 mais recentes', async () => {
+    vi.mocked(fetchRepos).mockResolvedValue(projects);
+    vi.mocked(fetchFeatured).mockRejectedValue(new Error('supabase fora'));
+    renderNotebook();
+
+    await screen.findByRole('link', { name: 'alfa' });
+    await waitFor(() => expect(screen.getAllByText('destaque')).toHaveLength(3));
+    expect(screen.getAllByRole('link')[0]).toHaveTextContent('alfa');
   });
 
   it('mostra os cards salvos com um aviso quando o limite é atingido', async () => {

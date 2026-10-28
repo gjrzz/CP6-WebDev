@@ -10,9 +10,8 @@ import NotebookSpread, {
   NotebookScribbles,
 } from '@/components/sections/NotebookSpread';
 import ProjectsStates from '@/components/sections/ProjectsStates';
-import { useGithubRepos } from '@/hooks/useGithubRepos';
+import { useHomeProjects } from '@/hooks/useHomeProjects';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
-import { orderProjects } from '@/lib/orderProjects';
 import { tiltFor } from '@/lib/tilt';
 
 // Carregando, erro e vazio também aparecem "escritos" nas páginas do caderno
@@ -81,7 +80,7 @@ function OpenNotebook({ query, reduced, onClose }) {
         renderError={renderSpreadError}
         renderEmpty={renderSpreadEmpty}
       >
-        {(projects) => <NotebookPages projects={orderProjects(projects)} reduced={reduced} />}
+        {(projects) => <NotebookPages projects={projects} reduced={reduced} />}
       </ProjectsStates>
     </m.div>
   );
@@ -90,7 +89,7 @@ function OpenNotebook({ query, reduced, onClose }) {
 export default function ProjectsNotebook() {
   // Chamado na montagem da seção, não ao abrir: a busca roda enquanto a capa está fechada,
   // e ao abrir os projetos normalmente já estão prontos, sem skeleton
-  const query = useGithubRepos();
+  const query = useHomeProjects();
   // Abaixo de 1024px as páginas da foto ficam estreitas demais para o texto
   const isDesktop = useMediaQuery('(min-width: 1024px)');
   const reduced = useReducedMotion();
@@ -114,7 +113,7 @@ export default function ProjectsNotebook() {
         {/* Abaixo de 1024px, sem capa nem 3D: a lista já aparece aberta */}
         {!isDesktop ? (
           <ProjectsStates query={query} skeleton={listSkeleton}>
-            {(projects) => <ProjectList projects={orderProjects(projects)} />}
+            {(projects) => <ProjectList projects={projects} />}
           </ProjectsStates>
         ) : (
           <div data-notebook className="[perspective:1600px]">

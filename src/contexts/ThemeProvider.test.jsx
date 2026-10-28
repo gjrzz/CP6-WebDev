@@ -6,11 +6,13 @@ import { routes } from '@/app/router';
 import ThemeProvider from '@/contexts/ThemeProvider';
 import { THEME_STORAGE_KEY } from '@/lib/theme';
 
-// A home carrega os projetos: o teste do tema não deve depender da API do GitHub
+// A home carrega os projetos e os destaques: o teste do tema não depende de rede
+// (o Vitest lê o .env local, então sem o mock a leitura dos destaques seria real)
 vi.mock('@/services/github', async (importOriginal) => ({
   ...(await importOriginal()),
   fetchRepos: vi.fn().mockResolvedValue([]),
 }));
+vi.mock('@/services/featured', () => ({ fetchFeatured: vi.fn().mockResolvedValue([]) }));
 
 function renderApp() {
   render(

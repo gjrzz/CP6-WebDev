@@ -1,11 +1,12 @@
 import Button from '@/components/ui/Button';
+import FeaturedPanel from '@/components/dashboard/FeaturedPanel';
 import MessagesPanel from '@/components/dashboard/MessagesPanel';
 import { useAuth } from '@/hooks/useAuth';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { useLogout } from '@/hooks/useLogout';
 
 // Carregada com React.lazy (ver router.jsx): fora do bundle inicial.
-// Os destaques entram na próxima tarefa.
+// Mensagens recebidas e destaques da home.
 export default function DashboardPage() {
   useDocumentTitle('Dashboard · Gabriel Juarez');
   const { session } = useAuth();
@@ -23,6 +24,7 @@ export default function DashboardPage() {
         </Button>
       </div>
       <MessagesPanel />
+      <FeaturedPanel />
     </section>
   );
 }
