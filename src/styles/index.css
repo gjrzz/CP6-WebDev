@@ -8,7 +8,8 @@
   --color-accent: #e8c35a;
   /* Texto sobre o accent: escuro nos dois temas */
   --color-on-accent: #0a0a0a;
-  --font-display: 'Georgia', serif;
+  --font-display: 'Fraunces Variable', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }
 
 /* Tema claro: troca os valores dos tokens, sem classes extras nos componentes.

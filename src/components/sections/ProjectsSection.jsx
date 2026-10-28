@@ -2,8 +2,10 @@ import ProjectCard from '@/components/ui/ProjectCard';
 import ProjectCardSkeleton from '@/components/ui/ProjectCardSkeleton';
 import ErrorState from '@/components/ui/ErrorState';
 import EmptyState from '@/components/ui/EmptyState';
+import Reveal from '@/components/ui/Reveal';
 import { useGithubRepos } from '@/hooks/useGithubRepos';
 import { getGithubErrorText } from '@/lib/githubErrors';
+import { tiltFor } from '@/lib/tilt';
 
 const SKELETON_COUNT = 6;
 const grid = 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3';
@@ -37,10 +39,16 @@ export default function ProjectsSection() {
           </p>
         )}
         <ul className={grid}>
-          {projects.map((project) => (
-            <li key={project.name}>
+          {/* Cada card entra quando ele mesmo aparece; o atraso pela coluna faz a linha entrar em onda */}
+          {projects.map((project, index) => (
+            <Reveal
+              key={project.name}
+              as="li"
+              delay={(index % 3) * 0.08}
+              rotate={tiltFor(project.name)}
+            >
               <ProjectCard project={project} />
-            </li>
+            </Reveal>
           ))}
         </ul>
       </>

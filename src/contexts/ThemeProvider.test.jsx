@@ -22,9 +22,12 @@ function renderApp() {
   );
 }
 
-// jsdom não implementa matchMedia
+// jsdom não implementa matchMedia; os listeners são usados pelo Motion (reduced motion)
 function mockPrefersLight(matches) {
-  vi.stubGlobal('matchMedia', vi.fn().mockReturnValue({ matches }));
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockReturnValue({ matches, addEventListener() {}, removeEventListener() {} }),
+  );
 }
 
 describe('Tema', () => {
