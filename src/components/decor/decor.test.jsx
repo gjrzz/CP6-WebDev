@@ -4,6 +4,7 @@ import SectionBreak from '@/components/decor/SectionBreak';
 import SkateProgress from '@/components/decor/SkateProgress';
 import Sticker from '@/components/decor/Sticker';
 import TapeBand from '@/components/decor/TapeBand';
+import Viewfinder from '@/components/decor/Viewfinder';
 
 vi.mock('motion/react', async (importOriginal) => ({
   ...(await importOriginal()),
@@ -66,5 +67,15 @@ describe('Decoração da rolagem', () => {
     const { container } = renderWithMotion(<SkateProgress />);
     expect(container.querySelector('svg')).not.toBeNull();
     expect(container.firstChild).toHaveAttribute('aria-hidden', 'true');
+  });
+});
+
+describe('Visor de filmadora', () => {
+  it('é só decoração, com REC e timecode', () => {
+    const { container } = render(<Viewfinder running={false} />);
+
+    expect(container.firstChild).toHaveAttribute('aria-hidden', 'true');
+    expect(container).toHaveTextContent('rec');
+    expect(container).toHaveTextContent('00:00:00:00');
   });
 });
