@@ -3,27 +3,15 @@ import ProjectCardSkeleton from '@/components/ui/ProjectCardSkeleton';
 import ErrorState from '@/components/ui/ErrorState';
 import EmptyState from '@/components/ui/EmptyState';
 import { useGithubRepos } from '@/hooks/useGithubRepos';
-import { RateLimitError } from '@/services/github';
-import { formatTime } from '@/lib/formatDate';
+import { getGithubErrorText } from '@/lib/githubErrors';
 
 const SKELETON_COUNT = 6;
 const grid = 'grid gap-4 sm:grid-cols-2 lg:grid-cols-3';
 
-function getErrorText(error) {
-  if (!(error instanceof RateLimitError)) {
-    return { title: 'Não foi possível carregar os projetos', message: 'Verifique sua conexão.' };
-  }
-  const when = error.resetAt ? `às ${formatTime(error.resetAt)}` : 'em alguns minutos';
-  return {
-    title: 'O GitHub limitou as requisições',
-    message: `Tente de novo ${when}.`,
-  };
-}
-
 // Seção temporária: o caderno de projetos (feature/projects-notebook) substitui esta grade
 export default function ProjectsSection() {
   const { data: projects, error, isPending, isFetching, refetch } = useGithubRepos();
-  const errorText = error && getErrorText(error);
+  const errorText = error && getGithubErrorText(error, 'os projetos');
 
   let content;
   if (isPending || (isFetching && !projects)) {
