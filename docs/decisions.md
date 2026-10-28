@@ -92,3 +92,10 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
 - **Critério:** deploy automático por push, preview por PR e rewrite de SPA simples.
 - **Escolha:** Vercel, com CI de qualidade no GitHub Actions.
 - **Perdi:** nada relevante para o escopo; o GitHub Pages exigiria gambiarra de 404 para SPA.
+
+## 14. Commits: feitos por mim, não pela IA
+
+- **Comparei:** a IA roda `git add`/`git commit`/`git push` sozinha; a IA só propõe e eu executo.
+- **Critério:** controle e revisão de cada commit antes de entrar no histórico (o histórico é avaliado e vou ter que explicá-lo).
+- **Escolha:** eu faço todos os commits e pushes. A IA só cria a branch da tarefa e, no fim, entrega um plano de commits (skill `/commit`) com os comandos prontos para colar. `git add`, `git commit` e `git push` ficam no `deny` do `.claude/settings.json`.
+- **Perdi:** velocidade: cada tarefa termina com um passo manual meu em vez de commits automáticos.
