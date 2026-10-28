@@ -53,7 +53,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 ## 8. Performance
 
 - ⬜ Lighthouse mobile ≥ 80 em performance
-- ⬜ Imagens otimizadas (WebP/AVIF, tamanho certo, lazy)
+- 🟨 Imagens otimizadas (WebP/AVIF, tamanho certo, lazy) — pipeline e `Picture` prontos; faltam as fotos
 - ⬜ Dashboard e elementos pesados carregados sob demanda (`React.lazy`)
 - 🟨 Sem saltos de layout (CLS) — skeleton com a mesma altura do card
 - ✅ Sem requisições repetidas à API do GitHub ao navegar (cache do TanStack Query + `localStorage`; a página do projeto reaproveita a listagem)
