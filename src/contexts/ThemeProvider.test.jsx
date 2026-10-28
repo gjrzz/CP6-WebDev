@@ -1,15 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { createMemoryRouter, RouterProvider } from 'react-router';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { routes } from '@/app/router';
 import ThemeProvider from '@/contexts/ThemeProvider';
 import { THEME_STORAGE_KEY } from '@/lib/theme';
 
+// A home carrega os projetos: o teste do tema não deve depender da API do GitHub
+vi.mock('@/services/github', async (importOriginal) => ({
+  ...(await importOriginal()),
+  fetchRepos: vi.fn().mockResolvedValue([]),
+}));
+
 function renderApp() {
   render(
-    <ThemeProvider>
-      <RouterProvider router={createMemoryRouter(routes, { initialEntries: ['/'] })} />
-    </ThemeProvider>,
+    <QueryClientProvider client={new QueryClient()}>
+      <ThemeProvider>
+        <RouterProvider router={createMemoryRouter(routes, { initialEntries: ['/'] })} />
+      </ThemeProvider>
+    </QueryClientProvider>,
   );
 }
 
