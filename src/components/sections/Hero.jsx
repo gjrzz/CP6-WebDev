@@ -3,6 +3,7 @@ import { m, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import Picture from '@/components/ui/Picture';
 import Viewfinder from '@/components/decor/Viewfinder';
 import { useCrossfade } from '@/hooks/useCrossfade';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { HERO } from '@/lib/content';
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
@@ -139,21 +140,27 @@ export default function Hero() {
   const reduced = useReducedMotion();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  // Parallax leve: a foto desce mais devagar que o texto ao rolar
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 120]);
+  // Parallax leve só no desktop: a foto desce mais devagar que o texto ao rolar. No celular,
+  // com tudo empilhado, ela desceria por cima do texto que vem depois.
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, reduced || !isDesktop ? 0 : 120]);
   // A sequência do letreiro começa depois da batida do "G" no "abriel"
   const word = (entrance, order) => ({ entrance, order: AFTER_IMPACT_ORDER + order, reduced });
 
   return (
     <section ref={ref} className="relative min-h-[calc(100dvh-4.5rem)] overflow-hidden">
       {/* Letreiro em grid, como um cartaz: nome no topo, frase à esquerda, foto no centro,
-          cargos na vertical à direita. A frase inteira fica no h1 para o leitor de tela;
+          cargos na vertical à direita. No celular, empilha na ordem da frase (order-*):
+          nome, cargos, ", who builds…" e a foto por último. A frase inteira fica no h1 para o leitor de tela;
           os pedaços visuais são aria-hidden. */}
       <div className="mx-auto grid min-h-[calc(100dvh-4.5rem)] max-w-7xl gap-x-10 gap-y-8 px-4 py-8 md:px-8 lg:grid-cols-[minmax(0,1fr)_auto_auto] lg:grid-rows-[auto_1fr]">
         <h1 className="sr-only">{HERO.sentence}</h1>
 
         {/* Nome: "G" enorme só no contorno voa e bate no "abriel"; o resto ao lado */}
-        <div aria-hidden="true" className="flex flex-wrap items-start lg:col-span-2">
+        <div
+          aria-hidden="true"
+          className="order-1 flex flex-wrap items-start lg:order-none lg:col-span-2"
+        >
           <CollidingName reduced={reduced} />
           <Word
             {...word('thin', 0)}
@@ -166,7 +173,7 @@ export default function Hero() {
         {/* Frase quebrada em linhas, alternando pequeno e grande */}
         <div
           aria-hidden="true"
-          className="flex flex-col justify-center gap-1 lg:col-start-1 lg:row-start-2"
+          className="order-3 flex flex-col justify-center gap-1 lg:order-none lg:col-start-1 lg:row-start-2"
         >
           <Word {...word('thin', 1)} className={small}>
             , who builds
@@ -192,7 +199,7 @@ export default function Hero() {
         </div>
 
         {/* Foto no centro; o wrapper sem transform deixa o y livre para o parallax */}
-        <div className="flex items-center justify-center lg:col-start-2 lg:row-start-2">
+        <div className="order-4 flex items-center justify-center lg:order-none lg:col-start-2 lg:row-start-2">
           <m.div style={{ y: photoY }}>
             <HeroPhotos reduced={reduced} />
           </m.div>
@@ -201,7 +208,7 @@ export default function Hero() {
         {/* Cargos: duas colunas verticais enormes no desktop, horizontais no celular */}
         <div
           aria-hidden="true"
-          className="flex flex-wrap items-baseline gap-x-4 lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:flex-nowrap lg:items-start lg:justify-end lg:gap-x-3"
+          className="order-2 flex flex-wrap items-baseline gap-x-4 lg:order-none lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:flex-nowrap lg:items-start lg:justify-end lg:gap-x-3"
         >
           <Word
             {...word('role', 7)}
