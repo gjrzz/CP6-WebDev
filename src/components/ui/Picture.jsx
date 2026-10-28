@@ -7,9 +7,12 @@ export default function Picture({
   height,
   sizes = '100vw',
   priority = false,
+  cover = false,
   className = '',
 }) {
   const sources = getImageSources(name);
+  // `cover`: preenche o contêiner posicionado (fundo), cortando o excesso como object-fit: cover
+  const sizing = cover ? 'absolute inset-0 h-full w-full object-cover' : 'h-auto max-w-full';
 
   // Foto ainda não gerada: SVG vazio com o mesmo tamanho e proporção do <img>,
   // para a troca pela foto real não mover o layout. O alt continua acessível
@@ -21,7 +24,8 @@ export default function Picture({
         width={width}
         height={height}
         viewBox={`0 0 ${width} ${height}`}
-        className={`bg-paper/5 h-auto max-w-full ${className}`}
+        preserveAspectRatio={cover ? 'xMidYMid slice' : undefined}
+        className={`bg-paper/5 ${sizing} ${className}`}
       />
     );
   }
@@ -38,7 +42,7 @@ export default function Picture({
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : undefined}
         decoding="async"
-        className={`h-auto max-w-full ${className}`}
+        className={`${sizing} ${className}`}
       />
     </picture>
   );
