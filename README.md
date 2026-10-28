@@ -29,6 +29,27 @@ npm run dev
 
 Todas estão descritas em [`.env.example`](.env.example). O `.env` nunca vai para o repositório.
 
+### Imagens
+
+As fotos originais ficam em `src/assets/raw/`, que não vai para o Git. O comando abaixo gera em `src/assets/img/` as versões AVIF e WebP em 640 e 1280 px, e essas sim vão para o repositório:
+
+```bash
+npm run images
+```
+
+Enquanto uma foto não existe, o site mostra uma caixa vazia do mesmo tamanho, no lugar dela. Depois de rodar o comando, a foto aparece sem mudar código. Use **PNG** para recortes com fundo transparente e **JPG** para fotos retangulares. Com pelo menos 1280 px de largura, o script gera os dois tamanhos.
+
+| Arquivo           | Conteúdo                                       | Proporção | Tamanho mínimo |
+| ----------------- | ---------------------------------------------- | --------- | -------------- |
+| `hero-skate.jpg`  | Hero: andando de skate                         | 4:5       | 1280 × 1600    |
+| `hero-trampo.jpg` | Hero: no trabalho                              | 4:5       | 1280 × 1600    |
+| `hero-setup.jpg`  | Hero: setup                                    | 4:5       | 1280 × 1600    |
+| `caderno.png`     | Caderno/shape com adesivos, recortado          | 3:4       | 1280 × 1707    |
+| `bancada.jpg`     | Tapete antiestático visto de cima, com o papel | 16:9      | 1280 × 720     |
+| `mao-cartao.png`  | Mão segurando o cartão em branco, recortada    | 4:5       | 1280 × 1600    |
+
+As três fotos do hero precisam ter a mesma proporção, porque se alternam no mesmo espaço.
+
 ### Banco (Supabase)
 
 1. Crie um projeto no Supabase.
@@ -44,6 +65,7 @@ Todas estão descritas em [`.env.example`](.env.example). O `.env` nunca vai par
 | `npm run lint` / `lint:fix`       | ESLint                               |
 | `npm run format` / `format:check` | Prettier                             |
 | `npm test` / `test:watch`         | Testes com Vitest                    |
+| `npm run images`                  | Gera AVIF/WebP de `src/assets/raw`   |
 
 ## Arquitetura
 
