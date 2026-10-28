@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { m, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import Picture from '@/components/ui/Picture';
+import Viewfinder from '@/components/decor/Viewfinder';
 import { useCrossfade } from '@/hooks/useCrossfade';
 import { HERO } from '@/lib/content';
 
@@ -20,25 +21,92 @@ function Word({ entrance, order, reduced, className = '', children }) {
       className={`inline-block ${className}`}
       initial={reduced ? false : entrances[entrance]}
       animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-      transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.1 + order * 0.12 }}
+      transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.1 + order * 0.1 }}
     >
       {children}
     </m.span>
   );
 }
 
+// Momentos da batida (s): o "abriel" aparece, o "G" voa da esquerda e bate nele
+const NAME_IN = 0.1;
+const G_START = 0.45;
+const G_FLIGHT = 0.55;
+const IMPACT = G_START + G_FLIGHT;
+// O resto do letreiro entra depois da batida
+const AFTER_IMPACT_ORDER = Math.ceil((IMPACT + 0.2 - 0.1) / 0.1);
+
+// "G" enorme só no contorno que entra voando e colide com o "abriel"
+function CollidingName({ reduced }) {
+  const outline =
+    'font-display inline-block text-[clamp(8rem,20vw,18rem)] leading-[0.8] font-light text-transparent [-webkit-text-stroke:1.5px_var(--color-paper)]';
+  const rest =
+    'font-display relative -ml-[0.15em] inline-block text-[clamp(3.5rem,9vw,8rem)] leading-none font-black italic';
+
+  if (reduced) {
+    return (
+      <>
+        <span className={outline}>G</span>
+        <span className={rest}>abriel</span>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {/* Vem de fora da tela acelerando (easeIn), passa um pouco do ponto e assenta */}
+      <m.span
+        className={outline}
+        initial={{ x: '-100vw' }}
+        animate={{ x: ['-100vw', '4%', '0%'] }}
+        transition={{
+          delay: G_START,
+          duration: G_FLIGHT + 0.25,
+          times: [0, G_FLIGHT / (G_FLIGHT + 0.25), 1],
+          ease: ['easeIn', 'easeOut'],
+        }}
+      >
+        G
+      </m.span>
+      {/* Aparece antes e, no impacto, leva o tranco: empurrado para a direita, balança e volta */}
+      <m.span
+        className={rest}
+        initial={{ opacity: 0, y: 12 }}
+        animate={{
+          opacity: 1,
+          y: 0,
+          x: [0, 0, 28, -6, 0],
+          rotate: [0, 0, 5, -2, 0],
+        }}
+        transition={{
+          opacity: { delay: NAME_IN, duration: 0.4 },
+          y: { delay: NAME_IN, duration: 0.4, ease: EASE_OUT },
+          default: { delay: IMPACT - 0.01, duration: 0.6, times: [0, 0.02, 0.25, 0.6, 1] },
+        }}
+      >
+        abriel
+      </m.span>
+    </>
+  );
+}
+
+// Moldura com proporção fixa (HERO.frame): fotos de proporções diferentes ocupam o mesmo
+// espaço, cortadas no ponto de `focus`, e a troca entre elas não mexe no layout
 function HeroPhotos({ reduced }) {
-  const { photos, photoSize } = HERO;
+  const { photos, frame } = HERO;
   const index = useCrossfade(photos.length, { paused: reduced });
   // Com reduced motion, só a primeira foto, sem troca automática
   const shown = reduced ? photos.slice(0, 1) : photos;
 
   return (
-    <div className="grid">
+    <div
+      className="relative w-72 overflow-hidden sm:w-96 lg:w-[min(34vw,32rem)]"
+      style={{ aspectRatio: `${frame.width} / ${frame.height}` }}
+    >
       {shown.map((photo, i) => (
         <m.div
           key={photo.name}
-          className="[grid-area:1/1]"
+          className="absolute inset-0"
           initial={false}
           animate={{ opacity: i === index ? 1 : 0 }}
           transition={{ duration: 1 }}
@@ -47,17 +115,25 @@ function HeroPhotos({ reduced }) {
           <Picture
             name={photo.name}
             alt={photo.alt}
-            width={photoSize.width}
-            height={photoSize.height}
-            sizes="(min-width: 768px) 320px, 192px"
+            width={photo.width}
+            height={photo.height}
+            sizes="(min-width: 1024px) 32rem, (min-width: 640px) 24rem, 18rem"
             priority={i === 0}
-            className="w-48 rounded-sm md:w-80"
+            cover
+            position={photo.focus}
           />
         </m.div>
       ))}
+      {/* Visor de filmadora por cima das fotos; com reduced motion, REC aceso e timecode parado */}
+      <Viewfinder running={!reduced} />
     </div>
   );
 }
+
+// Estilos das palavras da coluna da esquerda: pequenas e espaçadas, ou grandes e finas
+const small = 'font-display text-base font-light tracking-[0.5em] md:text-lg';
+const large =
+  'font-display text-[clamp(2.25rem,4.5vw,4rem)] leading-tight font-light tracking-[0.3em] italic';
 
 export default function Hero() {
   const reduced = useReducedMotion();
@@ -65,71 +141,88 @@ export default function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   // Parallax leve: a foto desce mais devagar que o texto ao rolar
   const photoY = useTransform(scrollYProgress, [0, 1], [0, reduced ? 0 : 120]);
+  // A sequência do letreiro começa depois da batida do "G" no "abriel"
+  const word = (entrance, order) => ({ entrance, order: AFTER_IMPACT_ORDER + order, reduced });
 
   return (
-    <section ref={ref} className="relative isolate min-h-[calc(100dvh-4.5rem)] overflow-hidden">
-      {/* Foto centralizada atrás do texto; o wrapper sem transform deixa o y livre para o parallax */}
-      <div className="absolute inset-0 -z-10 flex items-center justify-center">
-        <m.div style={{ y: photoY }}>
-          <HeroPhotos reduced={reduced} />
-        </m.div>
-      </div>
+    <section ref={ref} className="relative min-h-[calc(100dvh-4.5rem)] overflow-hidden">
+      {/* Letreiro em grid, como um cartaz: nome no topo, frase à esquerda, foto no centro,
+          cargos na vertical à direita. A frase inteira fica no h1 para o leitor de tela;
+          os pedaços visuais são aria-hidden. */}
+      <div className="mx-auto grid min-h-[calc(100dvh-4.5rem)] max-w-7xl gap-x-10 gap-y-8 px-4 py-8 md:px-8 lg:grid-cols-[minmax(0,1fr)_auto_auto] lg:grid-rows-[auto_1fr]">
+        <h1 className="sr-only">{HERO.sentence}</h1>
 
-      <h1 className="mx-auto flex min-h-[calc(100dvh-4.5rem)] max-w-6xl flex-col justify-between px-4 py-8 md:px-8 md:py-12">
-        <span className="sr-only">{HERO.sentence}</span>
-
-        {/* Versão visual: a frase montada com estilos mistos, como letreiro */}
-        <span aria-hidden="true" className="block">
-          <span className="block leading-none">
-            <Word
-              entrance="outline"
-              order={0}
-              reduced={reduced}
-              className="font-display text-[clamp(7rem,26vw,18rem)] font-light text-transparent [-webkit-text-stroke:2px_var(--color-paper)]"
-            >
-              G
-            </Word>
-            <Word
-              entrance="italic"
-              order={1}
-              reduced={reduced}
-              className="font-display text-[clamp(3rem,11vw,8rem)] font-black italic"
-            >
-              abriel
-            </Word>
-          </span>
+        {/* Nome: "G" enorme só no contorno voa e bate no "abriel"; o resto ao lado */}
+        <div aria-hidden="true" className="flex flex-wrap items-start lg:col-span-2">
+          <CollidingName reduced={reduced} />
           <Word
-            entrance="thin"
-            order={2}
-            reduced={reduced}
-            className="text-muted mt-2 font-mono text-xs tracking-[0.4em] uppercase md:text-sm"
+            {...word('thin', 0)}
+            className={`${small} text-muted mt-4 self-start md:ml-8 lg:mt-8`}
           >
             is a São Paulo-based
           </Word>
-        </span>
+        </div>
 
-        <span aria-hidden="true" className="flex flex-col gap-4 md:items-end">
-          {/* Cargo: horizontal no celular, vertical à direita no desktop */}
-          <span className="md:absolute md:top-1/2 md:right-8 md:-translate-y-1/2">
-            <Word
-              entrance="role"
-              order={3}
-              reduced={reduced}
-              className="font-display text-accent text-2xl italic md:text-4xl md:[writing-mode:vertical-rl]"
-            >
-              IT Analyst / Developer
-            </Word>
-          </span>
-          <Word
-            entrance="thin"
-            order={4}
-            reduced={reduced}
-            className="font-display max-w-md text-xl font-light md:text-right md:text-3xl"
-          >
-            who builds tools, automations and systems.
+        {/* Frase quebrada em linhas, alternando pequeno e grande */}
+        <div
+          aria-hidden="true"
+          className="flex flex-col justify-center gap-1 lg:col-start-1 lg:row-start-2"
+        >
+          <Word {...word('thin', 1)} className={small}>
+            , who builds
           </Word>
-        </span>
-      </h1>
+          <Word {...word('thin', 2)} className={large}>
+            tools
+          </Word>
+          <Word {...word('thin', 3)} className={large}>
+            , auto
+          </Word>
+          <Word {...word('thin', 4)} className={large}>
+            mations
+          </Word>
+          <Word {...word('thin', 5)} className={small}>
+            , and
+          </Word>
+          <Word
+            {...word('italic', 6)}
+            className="font-brush text-accent text-[clamp(3rem,6vw,5.5rem)] leading-none"
+          >
+            systems.
+          </Word>
+        </div>
+
+        {/* Foto no centro; o wrapper sem transform deixa o y livre para o parallax */}
+        <div className="flex items-center justify-center lg:col-start-2 lg:row-start-2">
+          <m.div style={{ y: photoY }}>
+            <HeroPhotos reduced={reduced} />
+          </m.div>
+        </div>
+
+        {/* Cargos: duas colunas verticais enormes no desktop, horizontais no celular */}
+        <div
+          aria-hidden="true"
+          className="flex flex-wrap items-baseline gap-x-4 lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:flex-nowrap lg:items-start lg:justify-end lg:gap-x-3"
+        >
+          <Word
+            {...word('role', 7)}
+            className="font-display text-5xl leading-none font-black lg:text-[clamp(4rem,7vw,7rem)] lg:[writing-mode:vertical-rl]"
+          >
+            IT Analyst
+          </Word>
+          <Word
+            {...word('thin', 8)}
+            className={`${small} text-muted lg:[writing-mode:vertical-rl]`}
+          >
+            and
+          </Word>
+          <Word
+            {...word('role', 9)}
+            className="font-display text-5xl leading-none font-black lg:text-[clamp(4rem,7vw,7rem)] lg:[writing-mode:vertical-rl]"
+          >
+            Developer
+          </Word>
+        </div>
+      </div>
     </section>
   );
 }

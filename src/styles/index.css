@@ -26,6 +26,15 @@
   --font-bubble: 'Rubik Bubbles', system-ui, sans-serif;
   --font-brush: 'Permanent Marker', cursive;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  /* Visor de filmadora do hero: luz do REC e o piscar dela (só opacity, em degraus) */
+  --color-rec: #ff3b30;
+  --animate-rec: rec-blink 1.2s steps(1, end) infinite;
+
+  @keyframes rec-blink {
+    50% {
+      opacity: 0;
+    }
+  }
 }
 
 /* Tema claro: troca os valores dos tokens, sem classes extras nos componentes.

@@ -39,17 +39,17 @@ npm run images
 
 Enquanto uma foto não existe, o site mostra uma caixa vazia do mesmo tamanho, no lugar dela. Depois de rodar o comando, a foto aparece sem mudar código. Use **PNG** para recortes com fundo transparente e **JPG** para fotos retangulares. Com pelo menos 1280 px de largura, o script gera os dois tamanhos.
 
-| Arquivo               | Conteúdo                                                                        | Proporção | Tamanho mínimo |
-| --------------------- | ------------------------------------------------------------------------------- | --------- | -------------- |
-| `hero-skate.jpg`      | Hero: andando de skate                                                          | 4:5       | 1280 × 1600    |
-| `hero-trampo.jpg`     | Hero: no trabalho                                                               | 4:5       | 1280 × 1600    |
-| `hero-setup.jpg`      | Hero: setup                                                                     | 4:5       | 1280 × 1600    |
-| `notebook_closed.png` | Capa do caderno com adesivos, recortada                                         | 11:6      | 1408 × 768     |
-| `notebook_opened.png` | Caderno aberto com páginas em branco, recortado                                 | 11:6      | 1408 × 768     |
-| `bancada.jpg`         | Tapete antiestático visto de cima com 2 ou 3 objetos, sem folha (a folha é CSS) | 16:9      | 1280 × 720     |
-| `mao-cartao.png`      | Mão segurando o cartão em branco, recortada                                     | 4:5       | 1280 × 1600    |
+| Arquivo               | Conteúdo                                                                        | Proporção | Tamanho mínimo  |
+| --------------------- | ------------------------------------------------------------------------------- | --------- | --------------- |
+| `hero-skate.jpeg`     | Hero: andando de skate                                                          | qualquer  | 1280 de largura |
+| `hero-trampo.jpeg`    | Hero: no trabalho                                                               | qualquer  | 1280 de largura |
+| `hero-setup.jpeg`     | Hero: setup                                                                     | qualquer  | 1280 de largura |
+| `notebook_closed.png` | Capa do caderno com adesivos, recortada                                         | 11:6      | 1408 × 768      |
+| `notebook_opened.png` | Caderno aberto com páginas em branco, recortado                                 | 11:6      | 1408 × 768      |
+| `bancada.jpg`         | Tapete antiestático visto de cima com 2 ou 3 objetos, sem folha (a folha é CSS) | 16:9      | 1280 × 720      |
+| `mao-cartao.png`      | Mão segurando o cartão em branco, recortada                                     | 4:5       | 1280 × 1600     |
 
-As três fotos do hero precisam ter a mesma proporção, porque se alternam no mesmo espaço. O mesmo vale para as duas fotos do caderno, que trocam de lugar ao abrir. Os projetos são escritos sobre as páginas do `notebook_opened.png` em posições definidas em porcentagem (`NOTEBOOK.pages` em `src/lib/content.js`): se essa foto mudar, ajuste lá.
+As fotos do hero podem ter proporções diferentes: elas aparecem numa moldura 4:3, cortadas no ponto de foco de cada uma (`HERO.photos[].focus` em `src/lib/content.js`, ex.: `'50% 40%'`). Ao trocar uma foto, atualize lá também o `width`/`height` dela. As duas fotos do caderno, ao contrário, precisam ter a mesma proporção, que trocam de lugar ao abrir. Os projetos são escritos sobre as páginas do `notebook_opened.png` em posições definidas em porcentagem (`NOTEBOOK.pages` em `src/lib/content.js`): se essa foto mudar, ajuste lá.
 
 ### Banco (Supabase)
 
