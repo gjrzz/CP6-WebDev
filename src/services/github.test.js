@@ -1,4 +1,4 @@
-import { fetchRepos, RateLimitError } from '@/services/github';
+import { fetchRepo, fetchRepos, RateLimitError, RepoNotFoundError } from '@/services/github';
 
 function mockResponse({ status = 200, body = [], headers = {} }) {
   return {
@@ -71,5 +71,25 @@ describe('fetchRepos', () => {
     const error = await fetchRepos().catch((err) => err);
     expect(error).toBeInstanceOf(Error);
     expect(error).not.toBeInstanceOf(RateLimitError);
+  });
+});
+
+describe('fetchRepo', () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  it('devolve o repositório mapeado', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse({ body: repo })));
+    await expect(fetchRepo('meu-app')).resolves.toMatchObject({ name: 'meu-app', stars: 3 });
+  });
+
+  it('lança RepoNotFoundError no 404', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(mockResponse({ status: 404 })));
+    await expect(fetchRepo('inexistente')).rejects.toBeInstanceOf(RepoNotFoundError);
+  });
+
+  it('trata fork como não encontrado, como na listagem', async () => {
+    const response = mockResponse({ body: { ...repo, fork: true } });
+    vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response));
+    await expect(fetchRepo('meu-app')).rejects.toBeInstanceOf(RepoNotFoundError);
   });
 });
