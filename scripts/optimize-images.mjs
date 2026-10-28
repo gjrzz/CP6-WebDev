@@ -50,6 +50,10 @@ async function optimize(file) {
   if (widths.length === 0) {
     console.warn(`! ${file}: ${sourceWidth}px de largura; use pelo menos ${WIDTHS[0]}px`);
     widths.push(sourceWidth);
+  } else if (sourceWidth > widths.at(-1) && sourceWidth < WIDTHS.at(-1)) {
+    // Entre dois tamanhos (ex.: 864px): gera também na largura original, para não jogar
+    // fora a resolução que existe acima dos 640
+    widths.push(sourceWidth);
   }
 
   for (const width of widths) {
