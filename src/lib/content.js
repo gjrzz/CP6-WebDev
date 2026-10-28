@@ -11,3 +11,10 @@ export const HERO = {
     { name: 'hero-setup', alt: 'Setup de trabalho do Gabriel' },
   ],
 };
+
+export const NOTEBOOK = {
+  // Proporção 3:4 (ver README, seção "Imagens")
+  cover: { name: 'caderno', alt: 'Caderno coberto de adesivos', width: 600, height: 800 },
+  // Dois cards em cada página do caderno aberto
+  perPage: 4,
+};
