@@ -116,6 +116,8 @@ Entrada com Motion (opacity + y, stagger nas palavras). Com prefers-reduced-moti
 O texto inteiro precisa existir no DOM como texto real (h1).
 ```
 
+Animações combinadas (28/10): cada palavra entra com um movimento próprio ("G" com scale, "abriel" deslizando, cargo subindo); parallax leve na foto (`useScroll` em `y`); componente `Reveal` (entrada no scroll, uma vez só) usado pelas seções seguintes; cards de projeto entrando como adesivos (inclinação fixa por nome que assenta com spring, atraso por coluna). Motion via `LazyMotion` + `m`.
+
 ### 7. `feature/projects-notebook` — caderno de projetos · req. 3, 7
 
 ```
@@ -127,6 +129,8 @@ No celular, o caderno já abre direto em uma lista vertical, sem a animação 3D
 Anime só transform e opacity.
 ```
 
+Animações combinadas: no hover, o caderno inclina de leve (`rotate: -2deg`) e cresce, como adesivo descolando; ao abrir, os cards entram em stagger reaproveitando o `Reveal`.
+
 ### 8. `feature/workbench` — bancada e stack · req. 7
 
 ```
@@ -136,6 +140,8 @@ Seção com a imagem da bancada vista de cima e uma folha de papel. Quando a se�
 Os dados ficam em src/lib/content.js, não espalhados no JSX.
 Com prefers-reduced-motion, as palavras aparecem prontas.
 ```
+
+Animações combinadas: "tranco" de carimbo em cada letra (chega de `scale: 1.4` com `rotate` aleatório e assenta com spring).
 
 ---
 
@@ -153,6 +159,8 @@ Botão de enviar com loading e desabilitado durante o envio. Feedback de sucesso
 Visual: a mão segurando o cartão "Let's build something"; ao clicar, o cartão vira (rotateY) e mostra o formulário.
 Testes: mensagens de erro por campo ao enviar vazio/inválido; botão desabilitado enquanto envia (mock do service).
 ```
+
+Animações combinadas: a mão com o cartão sobe de baixo ao entrar na tela; o cartão flutua de leve em loop (`y` ±4px) até o hover. No rodapé, sublinhado dos links crescendo com `scaleX`. Evitar: cursor customizado, scroll-jacking e transição entre páginas.
 
 ### 10. `feature/auth` — login e rota protegida · req. 5, 8, 9
 
