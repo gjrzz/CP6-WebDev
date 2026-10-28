@@ -19,8 +19,8 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 ## 2. Estados de carregamento
 
 - 🟨 Todo dado de API exibe carregando, erro e lista vazia (listagem e página do projeto prontas)
-- 🟨 Indicador visual enquanto carrega (skeleton nos cards, spinner no envio do formulário)
-- ⬜ Botão de enviar bloqueado durante o envio
+- ✅ Indicador visual enquanto carrega (skeleton nos cards, spinner no envio do formulário)
+- ✅ Botão de enviar bloqueado durante o envio (`ContactForm.test.jsx`)
 
 ## 3. Integração com o GitHub
 
@@ -30,9 +30,9 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 ## 4. Formulário de contato
 
-- ⬜ Validação por campo com mensagem específica (ex.: "e-mail inválido", "mínimo 20 caracteres")
-- ⬜ Mensagem enviada por e-mail ao dono **e** salva para consulta no dashboard
-- ⬜ Feedback de sucesso ou erro após o envio
+- ✅ Validação por campo com mensagem específica (ex.: "e-mail inválido", "mínimo 20 caracteres")
+- 🟨 Mensagem enviada por e-mail ao dono **e** salva para consulta no dashboard — código pronto e testado com mocks; falta testar com as chaves reais (Supabase + EmailJS)
+- ✅ Feedback de sucesso ou erro após o envio
 
 ## 5. Dashboard do dono
 
@@ -54,13 +54,13 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 - ⬜ Lighthouse mobile ≥ 80 em performance
 - 🟨 Imagens otimizadas (WebP/AVIF, tamanho certo, lazy) — pipeline e `Picture` prontos; faltam as fotos
-- ⬜ Dashboard e elementos pesados carregados sob demanda (`React.lazy`)
+- 🟨 Dashboard e elementos pesados carregados sob demanda (`React.lazy`) — formulário, Supabase e EmailJS prontos (decisão 19); falta o dashboard
 - 🟨 Sem saltos de layout (CLS) — skeleton com a mesma altura do card
 - ✅ Sem requisições repetidas à API do GitHub ao navegar (cache do TanStack Query + `localStorage`; a página do projeto reaproveita a listagem)
 
 ## 9. Testes
 
-- ⬜ Validação do formulário de contato
+- ✅ Validação do formulário de contato (`contactSchema.test.js`, `ContactForm.test.jsx`)
 - ⬜ Bloqueio do dashboard sem login
 - ✅ Rota inexistente exibe 404 (`NotFoundPage.test.jsx`)
 
