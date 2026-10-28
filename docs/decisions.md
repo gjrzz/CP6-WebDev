@@ -146,3 +146,10 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
 - **Comparei (carregamento):** importar Supabase, EmailJS e o formulário (React Hook Form + Zod) no bundle inicial; carregar tudo sob demanda.
 - **Escolha:** `services/messages.js` e `services/email.js` usam `import()` dinâmico, e o `ContactForm` é `React.lazy`. Tudo é pré-carregado no primeiro sinal de interesse no cartão (mouse, foco ou clique). Medido no build: o chunk inicial ficou em 155,8 KB gzip; o formulário (36 KB), o Supabase (55 KB) e o EmailJS (1,5 KB) viraram chunks separados. As duas faces do cartão têm a mesma altura mínima, então o formulário carregar no verso não move o layout.
 - **Perdi:** no sucesso parcial, o visitante não sabe que só uma das vias funcionou (o dono vê pelo dashboard ou pelo e-mail). Num primeiro clique sem hover (teclado ou toque rápido), o formulário pode levar um instante para aparecer no verso.
+
+## 20. Autenticação só nas rotas do dono
+
+- **Comparei:** `AuthProvider` no `App` (sessão disponível em todo o site); `AuthProvider` num layout de rota que envolve só `/login` e `/dashboard`.
+- **Critério:** o `getSession()` baixa o Supabase (~55 KB gzip). No `App`, isso aconteceria em toda visita à home, desfazendo o carregamento sob demanda da decisão 19. Só o dono usa a sessão.
+- **Escolha:** `components/layout/AuthLayout` (rota sem caminho) com `AuthProvider`, `Suspense` e `<meta name="robots" content="noindex">` (o React 19 leva o meta para o `<head>`). `LoginPage` e `DashboardPage` são `React.lazy` (em `app/lazyPages.js`, por causa do Fast Refresh). `ProtectedRoute` mostra um spinner até a primeira leitura da sessão e só então redireciona, guardando a origem para o login voltar para ela.
+- **Perdi:** o resto do site não sabe se o dono está logado (ex.: não dá para mostrar um link "dashboard" no cabeçalho só para ele sem carregar o Supabase).
