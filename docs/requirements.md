@@ -19,7 +19,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 ## 2. Estados de carregamento
 
 - ⬜ Todo dado de API exibe carregando, erro e lista vazia
-- ⬜ Indicador visual enquanto carrega (skeleton nos cards, spinner no envio do formulário)
+- 🟨 Indicador visual enquanto carrega (skeleton nos cards, spinner no envio do formulário)
 - ⬜ Botão de enviar bloqueado durante o envio
 
 ## 3. Integração com o GitHub
@@ -47,7 +47,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 ## 7. Interface
 
 - ⬜ Layout responsivo testado em celular e desktop
-- ⬜ Componentes visuais reaproveitados (mesmo botão, mesmo card em todas as páginas)
+- 🟨 Componentes visuais reaproveitados (mesmo botão, mesmo card em todas as páginas)
 - ⬜ Identidade visual própria (ver `docs/design.md`)
 
 ## 8. Performance

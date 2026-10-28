@@ -50,5 +50,13 @@ create policy "dono gerencia destaques"
   using (true)
   with check (true);
 
+-- Permissões explícitas (o projeto foi criado sem expor tabelas automaticamente).
+-- O RLS acima filtra as linhas; os GRANTs abaixo definem quais operações cada papel pode tentar.
+grant insert on public.messages to anon, authenticated;
+grant select, update on public.messages to authenticated;
+grant select on public.featured_projects to anon, authenticated;
+grant insert, update, delete on public.featured_projects to authenticated;
+-- Atenção: o visitante não tem SELECT em messages, então o insert no front NÃO pode usar .select() depois.
+
 -- Desative o cadastro público em Authentication > Providers > Email (Allow new users to sign up = off)
 -- e crie o seu usuário em Authentication > Users. Assim "authenticated" = só você.
