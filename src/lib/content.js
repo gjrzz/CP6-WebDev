@@ -32,3 +32,73 @@ export const NOTEBOOK = {
   // Dois projetos em cada página
   perPage: 4,
 };
+
+export const WORKBENCH = {
+  // Só o tapete com objetos, sem a folha: a folha é CSS (ver README, seção "Imagens")
+  photo: {
+    name: 'bancada',
+    alt: 'Tapete antiestático visto de cima, com ferramentas',
+    width: 1600,
+    height: 900,
+  },
+  // Carimbadas uma por linha, letra por letra
+  words: ['tools', 'automations', 'systems'],
+  stack: [
+    {
+      label: 'Dev',
+      items: [
+        'JavaScript',
+        'TypeScript',
+        'React',
+        'Vite',
+        'Node.js',
+        'Python',
+        'Flutter',
+        'Supabase',
+        'Tailwind',
+        'Git',
+        'Docker',
+      ],
+    },
+    {
+      label: 'Infra & TI',
+      items: [
+        'Microsoft Intune',
+        'Apple Business Manager (ADE)',
+        'Entra ID + Platform SSO',
+        'PowerShell',
+        'Bash',
+        'GLPI',
+        'Qualys',
+        'WDS',
+      ],
+    },
+  ],
+  // `period: null` não aparece no site; preencha como '2024 – atual'
+  experience: [
+    {
+      role: 'IT Analyst',
+      company: 'Monte Bravo Corretora',
+      period: null, // TODO: início – atual
+      highlights: [
+        'Gestão da frota de macOS e Windows, com MDM no Intune, ABM e Platform SSO com Entra ID.',
+        'Onboarding de colaboradores, provisionamento de periféricos e deploy de políticas.',
+        'Ferramentas internas: plataforma de service desk e automação de processos internos.',
+      ],
+    },
+    {
+      role: 'Suporte de TI',
+      company: 'Matiz Assessoria Contábil',
+      period: null, // TODO: início – fim
+      highlights: ['Servidor local e NAS, rotina de backups e HelpDesk.'],
+    },
+  ],
+  education: [
+    {
+      course: 'Engenharia de Software',
+      school: 'FIAP',
+      period: null, // TODO: início – atual
+    },
+  ],
+  certifications: ['Bloomberg Terminal Technician'],
+};
