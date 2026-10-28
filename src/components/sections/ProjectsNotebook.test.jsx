@@ -102,13 +102,28 @@ describe('ProjectsNotebook no desktop', () => {
     renderNotebook();
     await userEvent.click(coverButton());
 
-    await userEvent.click(await screen.findByRole('button', { name: 'Fechar caderno' }));
+    await userEvent.click(await screen.findByRole('button', { name: 'fechar caderno' }));
 
     await waitFor(() => expect(coverButton()).toHaveFocus());
   });
+
+  it('escreve o erro na página do caderno, com "tentar de novo"', async () => {
+    vi.mocked(fetchRepos).mockRejectedValue(new Error('falhou'));
+    renderNotebook();
+    await userEvent.click(coverButton());
+
+    const notebook = await screen.findByRole('region', { name: 'Caderno de projetos aberto' });
+    expect(await within(notebook).findByRole('alert')).toHaveTextContent(
+      'Não foi possível carregar os projetos',
+    );
+
+    vi.mocked(fetchRepos).mockResolvedValue(projects);
+    await userEvent.click(within(notebook).getByRole('button', { name: /tentar de novo/i }));
+    expect(await within(notebook).findByRole('link', { name: 'alfa' })).toBeInTheDocument();
+  });
 });
 
-describe('ProjectsNotebook no celular', () => {
+describe('ProjectsNotebook abaixo de 1024px', () => {
   beforeEach(() => {
     desktop = false;
   });

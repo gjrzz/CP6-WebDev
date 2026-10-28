@@ -8,6 +8,12 @@
   --color-accent: #e8c35a;
   /* Texto sobre o accent: escuro nos dois temas */
   --color-on-accent: #0a0a0a;
+  /* Tinta sobre o papel do caderno: fixa nos dois temas, porque o papel da foto é sempre claro.
+     Contraste medido no tom mais escuro do papel (#d1d2ca): 11,4:1 e 5,9:1. */
+  --color-page-ink: #1a1a1a;
+  --color-page-muted: #4a4a45;
+  /* Marca-texto do "destaque"; a tinta por cima dá 10,3:1 */
+  --color-page-highlight: #e8c35a;
   --font-display: 'Fraunces Variable', Georgia, serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 }

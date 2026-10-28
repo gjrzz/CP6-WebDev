@@ -5,7 +5,7 @@ import { NOTEBOOK } from '@/lib/content';
 
 const EASE_OUT = [0.22, 1, 0.36, 1];
 
-// Capa fechada do caderno. Ao abrir, gira pela borda esquerda (rotateY) e some.
+// Capa fechada: a própria foto é o botão. Ao abrir, gira pela borda esquerda (rotateY) e some.
 export default function NotebookCover({ onOpen, focusOnMount, reduced }) {
   const ref = useRef(null);
   const { cover } = NOTEBOOK;
@@ -22,23 +22,24 @@ export default function NotebookCover({ onOpen, focusOnMount, reduced }) {
       onClick={onOpen}
       aria-expanded={false}
       style={{ transformOrigin: 'left center' }}
-      whileHover={reduced ? undefined : { rotate: -2, scale: 1.03 }}
+      whileHover={reduced ? undefined : { rotate: -2, scale: 1.02 }}
       exit={
         reduced
           ? { opacity: 0, transition: { duration: 0 } }
           : { rotateY: -110, opacity: 0, transition: { duration: 0.5, ease: EASE_OUT } }
       }
-      className="focus-visible:outline-accent mx-auto flex flex-col items-center gap-4 rounded-2xl p-2 focus-visible:outline-2 focus-visible:outline-offset-4"
+      className="focus-visible:outline-accent block w-full rounded-3xl focus-visible:outline-2 focus-visible:outline-offset-4"
     >
+      {/* Abaixo da dobra (o hero ocupa a primeira tela): carrega sob demanda */}
       <Picture
         name={cover.name}
         alt={cover.alt}
         width={cover.width}
         height={cover.height}
-        sizes="288px"
-        className="w-72"
+        sizes="(min-width: 1152px) 1088px, 100vw"
+        className="w-full"
       />
-      <span className="text-muted font-mono text-sm">
+      <span className="text-muted block font-mono text-sm">
         click to open
         <span className="sr-only"> — abrir caderno de projetos</span>
       </span>

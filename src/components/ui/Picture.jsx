@@ -12,12 +12,12 @@ export default function Picture({
   const sources = getImageSources(name);
 
   // Foto ainda não gerada: SVG vazio com o mesmo tamanho e proporção do <img>,
-  // para a troca pela foto real não mover o layout. O alt continua acessível.
+  // para a troca pela foto real não mover o layout. O alt continua acessível
+  // (alt vazio = imagem decorativa, escondida do leitor de tela como o <img alt="">).
   if (!sources) {
     return (
       <svg
-        role="img"
-        aria-label={alt}
+        {...(alt ? { role: 'img', 'aria-label': alt } : { 'aria-hidden': true })}
         width={width}
         height={height}
         viewBox={`0 0 ${width} ${height}`}
