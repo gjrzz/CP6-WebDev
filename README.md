@@ -4,7 +4,7 @@ Portfólio pessoal em React com projetos carregados direto do GitHub, formulári
 
 > Checkpoint 3 de Web Development (FIAP) — **Stack e Harness Engineering**.
 
-- **Site:** _link da Vercel_
+- **Site:** https://gabrieljuarez.vercel.app
 - **Vídeo:** _link do YouTube (não listado)_
 
 ## Tecnologias
