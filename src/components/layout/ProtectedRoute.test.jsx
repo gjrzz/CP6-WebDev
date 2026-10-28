@@ -14,6 +14,9 @@ vi.mock('@/services/auth', async (importOriginal) => ({
   signOut: vi.fn(),
 }));
 
+// O dashboard lista as mensagens; aqui só importa o acesso
+vi.mock('@/services/messages', () => ({ listMessages: vi.fn().mockResolvedValue([]) }));
+
 const session = { user: { email: 'dono@exemplo.com' } };
 let notifyAuth;
 
