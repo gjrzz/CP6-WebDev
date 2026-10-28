@@ -117,3 +117,10 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
 - **Critério:** sem token, a API do GitHub permite 60 requisições por hora por IP, e o projeto não tem backend próprio (fora do escopo). O visitante não pode ver a seção vazia porque a cota acabou.
 - **Escolha:** o `services/github.js` lança `RateLimitError` (com o horário de reset) só no 429 ou no 403 com `x-ratelimit-remaining: 0`; outros 403 são erro comum. Cada busca bem-sucedida grava a lista já mapeada (`{ name, description, language, updatedAt, htmlUrl, homepage, topics, stars }`) no `localStorage`, que volta como `initialData` + `initialDataUpdatedAt` do `useQuery`: com menos de 10 min nem chama a API. No erro de limite com cache, os cards salvos aparecem com um aviso discreto; sem cache, `ErrorState` com o horário de reset. O hook não repete a requisição quando o erro é de limite.
 - **Perdi:** a lista salva pode estar desatualizada enquanto o limite durar, e ela ocupa alguns KB no `localStorage` do visitante.
+
+## 17. Imagens: script com `sharp` + `<picture>` com AVIF e WebP
+
+- **Comparei:** exportar as imagens à mão; plugin de imagem no build do Vite (`vite-imagetools`); script próprio com `sharp` rodado sob demanda; CDN de imagens (Cloudinary).
+- **Critério:** Lighthouse mobile ≥ 80 sem deixar o build mais lento nem depender de serviço externo, e manter a transparência dos recortes.
+- **Escolha:** `npm run images` (`scripts/optimize-images.mjs`) lê `.png`/`.jpg`/`.jpeg` de `src/assets/raw/` (fora do Git) e gera AVIF (qualidade 50) e WebP (80) em 640 e 1280 px em `src/assets/img/` (no Git, porque a Vercel não tem os originais). Não amplia fotos menores e pula o que já está atualizado. O `components/ui/Picture` acha as versões por `import.meta.glob` (URLs com hash) e renderiza `<picture>` com `srcset`, `sizes`, `width`/`height`, `loading="lazy"` e, com `priority`, `fetchpriority="high"`. Sem a foto gerada, reserva o mesmo espaço com um SVG vazio (sem CLS) e mantém o `alt`.
+- **Perdi:** é preciso lembrar de rodar `npm run images` ao trocar uma foto, e as versões geradas aumentam o tamanho do repositório.
