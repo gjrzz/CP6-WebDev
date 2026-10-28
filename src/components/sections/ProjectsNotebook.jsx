@@ -103,41 +103,41 @@ export default function ProjectsNotebook() {
   };
 
   return (
-    <section
-      id="projetos"
-      aria-labelledby="projetos-titulo"
-      className="mx-auto w-full max-w-6xl px-4 py-16 md:px-8"
-    >
-      <h2 id="projetos-titulo" className="font-display mb-8 text-3xl italic">
-        Projetos
-      </h2>
+    // Largura total com overflow-x-clip: a capa entra pela borda da tela (ver NotebookCover)
+    // sem criar rolagem horizontal; diferente de hidden, não vira contêiner de rolagem
+    <section id="projetos" aria-labelledby="projetos-titulo" className="w-full overflow-x-clip">
+      <div className="mx-auto max-w-6xl px-4 py-16 md:px-8">
+        <h2 id="projetos-titulo" className="font-display mb-8 text-3xl italic">
+          Projetos
+        </h2>
 
-      {/* Abaixo de 1024px, sem capa nem 3D: a lista já aparece aberta */}
-      {!isDesktop ? (
-        <ProjectsStates query={query} skeleton={listSkeleton}>
-          {(projects) => <ProjectList projects={orderProjects(projects)} />}
-        </ProjectsStates>
-      ) : (
-        <div data-notebook className="[perspective:1600px]">
-          <AnimatePresence mode="wait" initial={false}>
-            {open ? (
-              <OpenNotebook
-                key="open"
-                query={query}
-                reduced={reduced}
-                onClose={() => setOpen(false)}
-              />
-            ) : (
-              <NotebookCover
-                key="cover"
-                onOpen={openNotebook}
-                focusOnMount={wasOpened}
-                reduced={reduced}
-              />
-            )}
-          </AnimatePresence>
-        </div>
-      )}
+        {/* Abaixo de 1024px, sem capa nem 3D: a lista já aparece aberta */}
+        {!isDesktop ? (
+          <ProjectsStates query={query} skeleton={listSkeleton}>
+            {(projects) => <ProjectList projects={orderProjects(projects)} />}
+          </ProjectsStates>
+        ) : (
+          <div data-notebook className="[perspective:1600px]">
+            <AnimatePresence mode="wait" initial={false}>
+              {open ? (
+                <OpenNotebook
+                  key="open"
+                  query={query}
+                  reduced={reduced}
+                  onClose={() => setOpen(false)}
+                />
+              ) : (
+                <NotebookCover
+                  key="cover"
+                  onOpen={openNotebook}
+                  focusOnMount={wasOpened}
+                  reduced={reduced}
+                />
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
