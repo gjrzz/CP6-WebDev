@@ -25,10 +25,10 @@ src/
 ├── pages/          # Uma página por rota. Monta a tela com components + hooks.
 ├── components/
 │   ├── ui/         # Peças genéricas e reaproveitáveis: Button, Card, Skeleton, Input…
-│   ├── layout/     # Estrutura comum: RootLayout, Header, Footer, ProtectedRoute
+│   ├── layout/     # Estrutura comum: RootLayout, Header, Footer, AuthLayout, ProtectedRoute
 │   └── sections/   # Blocos grandes da home: Hero, ProjectsNotebook, Workbench, ContactCard
 ├── hooks/          # Lógica e estado: useGithubRepos, useTheme, useAuth, useMessages…
-├── services/       # Acesso externo puro (sem React): github.js, supabase.js, messages.js, email.js
+├── services/       # Acesso externo puro (sem React): github.js, supabase.js, auth.js, messages.js, email.js
 ├── contexts/       # Contextos globais: ThemeContext, AuthContext
 ├── lib/            # Utilitários e schemas (ex.: contactSchema.js com Zod, formatDate.js)
 ├── assets/         # Imagens importadas pelo código (WebP/AVIF)
@@ -57,7 +57,8 @@ ContactForm ──▶ lib/contactSchema (Zod) ──▶ hooks/useSendMessage
                                               ├──▶ services/messages.js → Supabase (tabela messages)
                                               └──▶ services/email.js    → EmailJS (e-mail para o dono)
 
-LoginPage ──▶ AuthContext (Supabase Auth) ──▶ ProtectedRoute ──▶ DashboardPage (lazy)
+AuthLayout (AuthProvider, só em /login e /dashboard; ver decisão 20)
+LoginPage (lazy) ──▶ services/auth.js (Supabase Auth) ──▶ ProtectedRoute ──▶ DashboardPage (lazy)
                                                                    ├── lista/atualiza messages
                                                                    └── marca featured_projects
 ```
