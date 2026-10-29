@@ -1,4 +1,5 @@
 import { m, useReducedMotion, useScroll, useSpring, useTransform, useVelocity } from 'motion/react';
+import { useIdle } from '@/hooks/useIdle';
 
 // Altura do shape em px, para ele parar no fim da trilha em vez de passar dela
 const SKATE_SIZE = 40;
@@ -25,8 +26,16 @@ function SkateIcon() {
 
 // Indicador de progresso da página: um skate desce pela borda direita sobre uma trilha
 // pontilhada, inclinando com a velocidade da rolagem. Só no desktop e sem reduced motion.
+// Monta só quando o navegador fica ocioso: é decorativo e escuta a rolagem a cada frame,
+// então fica fora do trabalho do primeiro carregamento.
 export default function SkateProgress() {
   const reduced = useReducedMotion();
+  const idle = useIdle();
+  if (reduced || !idle) return null;
+  return <SkateTrack />;
+}
+
+function SkateTrack() {
   const { scrollY, scrollYProgress } = useScroll();
   // translateY em % da trilha, descontando o tamanho do shape no fim
   const y = useTransform(
@@ -38,8 +47,6 @@ export default function SkateProgress() {
     stiffness: 300,
     damping: 30,
   });
-
-  if (reduced) return null;
 
   return (
     <div

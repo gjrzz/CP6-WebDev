@@ -3,6 +3,7 @@ import { m, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import Picture from '@/components/ui/Picture';
 import Viewfinder from '@/components/decor/Viewfinder';
 import { useCrossfade } from '@/hooks/useCrossfade';
+import { useIdle } from '@/hooks/useIdle';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { HERO } from '@/lib/content';
 
@@ -95,9 +96,12 @@ function CollidingName({ reduced }) {
 // espaço, cortadas no ponto de `focus`, e a troca entre elas não mexe no layout
 function HeroPhotos({ reduced }) {
   const { photos, frame } = HERO;
-  const index = useCrossfade(photos.length, { paused: reduced });
+  // As outras fotos só entram quando o navegador fica ocioso (antes da 1ª troca, aos 3 s):
+  // no carregamento, a banda fica para a 1ª foto, que é o LCP
+  const idle = useIdle();
   // Com reduced motion, só a primeira foto, sem troca automática
-  const shown = reduced ? photos.slice(0, 1) : photos;
+  const shown = reduced || !idle ? photos.slice(0, 1) : photos;
+  const index = useCrossfade(shown.length, { paused: reduced });
 
   return (
     <div
@@ -118,7 +122,7 @@ function HeroPhotos({ reduced }) {
             alt={photo.alt}
             width={photo.width}
             height={photo.height}
-            sizes="(min-width: 1024px) 32rem, (min-width: 640px) 24rem, 18rem"
+            sizes={HERO.photoSizes}
             priority={i === 0}
             cover
             position={photo.focus}

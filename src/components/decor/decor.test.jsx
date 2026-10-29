@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { LazyMotion, domAnimation, useReducedMotion } from 'motion/react';
 import SectionBreak from '@/components/decor/SectionBreak';
 import SkateProgress from '@/components/decor/SkateProgress';
@@ -63,9 +63,14 @@ describe('Decoração da rolagem', () => {
     expect(container.querySelector('svg')).toBeNull();
   });
 
-  it('o skate de progresso aparece sem reduced motion', () => {
+  it('o skate de progresso aparece sem reduced motion, depois do carregamento', async () => {
     const { container } = renderWithMotion(<SkateProgress />);
-    expect(container.querySelector('svg')).not.toBeNull();
+    // Fica fora do primeiro carregamento: só monta quando o navegador fica ocioso
+    expect(container.querySelector('svg')).toBeNull();
+
+    await waitFor(() => expect(container.querySelector('svg')).not.toBeNull(), {
+      timeout: 2500,
+    });
     expect(container.firstChild).toHaveAttribute('aria-hidden', 'true');
   });
 });

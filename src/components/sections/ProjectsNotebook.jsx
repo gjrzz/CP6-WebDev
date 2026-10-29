@@ -104,7 +104,12 @@ export default function ProjectsNotebook() {
   return (
     // Largura total com overflow-x-clip: a capa entra pela borda da tela (ver NotebookCover)
     // sem criar rolagem horizontal; diferente de hidden, não vira contêiner de rolagem
-    <section id="projetos" aria-labelledby="projetos-titulo" className="w-full overflow-x-clip">
+    <section
+      id="projetos"
+      aria-labelledby="projetos-titulo"
+      className="below-fold w-full overflow-x-clip"
+      style={{ containIntrinsicSize: 'auto 900px' }}
+    >
       <div className="mx-auto max-w-6xl px-4 py-16 md:px-8">
         <h2 id="projetos-titulo" className="font-display mb-8 text-3xl italic">
           Projetos

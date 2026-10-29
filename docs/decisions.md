@@ -164,3 +164,25 @@ Formato de cada decisão: **opções comparadas → critério → escolha → o 
   - **Sem travar o caderno:** os destaques ficam no `localStorage`, como os repositórios (decisão 16), e voltam como `initialData`. Sem cache, `useHomeProjects` espera no máximo 1,5 s; depois mostra a ordem padrão (os 3 mais recentes) e reordena quando os destaques chegarem. Se a leitura falhar, fica a ordem padrão.
   - `services/config.js` valida `VITE_SUPABASE_URL` e `VITE_SUPABASE_ANON_KEY` (vazia, espaço ou quebra de linha) com mensagem clara no console. É o que teria mostrado na hora o erro do deploy em que a chave foi colada 5 vezes.
 - **Perdi:** a leitura dos destaques não tem os tipos nem os helpers do SDK (a URL da consulta é montada à mão), e sem cache a lista pode reordenar uma vez depois de 1,5 s.
+
+## 22. Performance mobile: medir certo e cortar trabalho do início
+
+- **Como medi:** Lighthouse 13.6.0 (perfil mobile padrão: CPU 4× mais lenta, 4G simulado), local no Edge headless. A máquina oscila ±10 pontos entre rodadas, então cada medição usa **5 rodadas intercaladas** entre a `main` (base) e a branch, servidas com gzip e fallback de SPA como na Vercel, e compara as **medianas**. O `vite preview` não comprime os arquivos e inflava o LCP local; o `npm run dev` nunca foi usado.
+- **Diagnóstico:** em produção (`main`), mediana **85** (85, 85, 93), CLS 0. O LCP é a 1ª foto do hero, que num SPA só aparece depois do JS. O gargalo era **CPU no início**: o React renderizava a home inteira de uma vez e o navegador calculava estilo e layout de tudo (~900 ms de "Style & Layout"), com tarefas longas de até 222 ms.
+- **O que entrou (um commit por correção):**
+  1. **Preload da foto do LCP** (`<link rel="preload" as="image" imagesrcset … imagesizes>`, injetado no build). A espera para começar o download caiu de ~100 para ~15 ms, mas sem efeito mensurável na nota: o LCP depende do JS, não do download.
+  2. **2ª e 3ª fotos do hero só no ocioso** (`useIdle`), antes da 1ª troca do crossfade. Sem efeito mensurável sozinho.
+  3. **Skate de progresso só no ocioso**: os listeners de rolagem saem do carregamento. Sem efeito mensurável sozinho.
+  4. **`content-visibility: auto` nas seções abaixo da dobra** (caderno, bancada, contato), com `contain-intrinsic-size: auto <altura>`. O conteúdo **continua no DOM** (texto real, `#âncoras`, leitor de tela, Ctrl+F); o navegador só pula estilo, layout e pintura até a seção chegar perto. Foi o que mais pesou.
+- **Antes × depois** (local, gzip, mediana de 5 intercaladas):
+
+  |        | Nota   | TBT        | LCP   |
+  | ------ | ------ | ---------- | ----- |
+  | `main` | 74     | 431 ms     | 4,4 s |
+  | branch | **84** | **142 ms** | 4,2 s |
+
+  A branch ganhou em 4 dos 5 pares de rodadas. A meta (≥ 80) já era cumprida em produção; o ganho é de margem.
+
+- **Descartado:** desmontar as seções de baixo com `React.lazy` + `IntersectionObserver` (tiraria texto importante do DOM e arriscaria salto ao navegar por `#contato`); tirar o Motion do chunk inicial (atrasaria a entrada do hero).
+- **Mapa do bundle:** `npm run analyze` (ou `ANALYZE=true npm run build`) gera `dist/stats.html` com o `rollup-plugin-visualizer` (treemap, tamanhos gzip/brotli). O build normal não muda.
+- **Perdi / próximo passo:** o LCP local segue em ~4,2 s porque a foto só é desenhada depois do JS executar. O próximo ganho grande seria pré-renderizar o HTML da home no build (SSG), o que muda a arquitetura e ficou fora do prazo.

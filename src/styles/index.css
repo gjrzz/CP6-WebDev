@@ -56,3 +56,11 @@ html {
   background: var(--color-ink);
   color: var(--color-paper);
 }
+
+/* Seções abaixo da primeira tela: continuam no DOM (texto real, links #âncora, leitores de
+   tela, Ctrl+F), mas o navegador pula estilo, layout e pintura delas até chegarem perto da
+   tela. A altura estimada vai inline em cada seção (contain-intrinsic-size: auto <altura>):
+   o "auto" faz o navegador lembrar a altura real depois da primeira renderização. */
+.below-fold {
+  content-visibility: auto;
+}
