@@ -51,6 +51,14 @@ describe('ContactCard', () => {
     await waitFor(() => expect(name).toHaveFocus());
   });
 
+  it('a mão fica por cima do cartão sem bloquear o clique nele', () => {
+    renderCard();
+    const hand = screen.getByAltText(/mão entregando o cartão/i);
+
+    expect(hand.closest('.pointer-events-none')).not.toBeNull();
+    expect(hand.closest('button')).toBeNull();
+  });
+
   it('a caneta é só decoração: fora do leitor de tela e sem bloquear cliques', () => {
     const { container } = renderCard();
     const pen = container.querySelector('img[src*="pen-"]');
