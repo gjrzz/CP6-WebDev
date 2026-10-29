@@ -1,6 +1,5 @@
 import { m, useReducedMotion } from 'motion/react';
-
-const EASE_OUT = [0.22, 1, 0.36, 1];
+import { EASE_OUT } from '@/lib/motion';
 
 // Entrada no scroll (opacity + y), uma vez só. Com `rotate`, chega inclinado e
 // assenta com spring, como um adesivo sendo colado.

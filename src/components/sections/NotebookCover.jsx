@@ -2,8 +2,7 @@ import { useEffect, useRef } from 'react';
 import { m, useScroll, useTransform } from 'motion/react';
 import Picture from '@/components/ui/Picture';
 import { NOTEBOOK } from '@/lib/content';
-
-const EASE_OUT = [0.22, 1, 0.36, 1];
+import { EASE_OUT } from '@/lib/motion';
 
 // Capa fechada: a própria foto é o botão. Ao abrir, gira pela borda esquerda (rotateY) e some.
 export default function NotebookCover({ onOpen, focusOnMount, reduced }) {
