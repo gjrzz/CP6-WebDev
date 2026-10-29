@@ -48,7 +48,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 - 🟨 Layout responsivo testado em celular e desktop — testado no celular; corrigida a ordem do hero (cargos escondidos atrás da foto); conferir de novo após o deploy
 - 🟨 Componentes visuais reaproveitados (mesmo botão, mesmo card em todas as páginas)
-- 🟨 Identidade visual própria (ver `docs/design.md`) — hero tipográfico, caderno de projetos, bancada carimbada, cartão de contato, fontes, animações de entrada e detalhes da rolagem prontos; faltam as fotos do hero, da bancada e da mão
+- 🟨 Identidade visual própria (ver `docs/design.md`) — hero tipográfico, caderno de projetos, bancada carimbada, cartão de contato, fontes, animações de entrada e detalhes da rolagem e mão entregando o cartão prontos; falta a foto da bancada
 
 ## 8. Performance
 
