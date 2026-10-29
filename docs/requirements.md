@@ -79,7 +79,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 ## 12. Arquitetura e padronização
 
 - ✅ Estrutura de pastas com responsabilidades claras
-- 🟨 Componentes pequenos, lógica em hooks/services: páginas abaixo de 65 linhas, `useQuery`/`useMutation` só em `hooks/`, `fetch` só em `services/`; falta quebrar `Hero` e `ContactCard`
+- ✅ Componentes pequenos, lógica em hooks/services: páginas e seções abaixo de ~150 linhas (`Hero` e `ContactCard` divididos em peças e hooks), `useQuery`/`useMutation` só em `hooks/`, `fetch` só em `services/`
 - ✅ Convenções de nomenclatura documentadas
 - ✅ Lint e formatação antes de cada commit (Husky + lint-staged)
 
