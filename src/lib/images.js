@@ -29,6 +29,17 @@ function toSrcSet(variants) {
     .join(', ');
 }
 
+// URLs da maior versão em cada formato ({ avif, webp }), para usar como fundo em CSS;
+// null se a imagem ainda não foi gerada
+export function getLargestImage(name) {
+  const image = images[name];
+  if (!image?.webp.length) return null;
+
+  const largest = (variants) =>
+    variants.length ? variants.reduce((a, b) => (b.width > a.width ? b : a)) : null;
+  return { avif: largest(image.avif)?.url ?? null, webp: largest(image.webp).url };
+}
+
 // { avif, webp, src } com os srcset prontos, ou null se a imagem ainda não foi gerada
 export function getImageSources(name) {
   const image = images[name];
