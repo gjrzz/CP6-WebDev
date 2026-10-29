@@ -5,14 +5,15 @@
 - `main` é sempre publicável: cada push nela vira deploy na Vercel.
 - Toda mudança nasce numa branch curta a partir da `main` atualizada:
 
-| Prefixo    | Uso                           | Exemplo                  |
-| ---------- | ----------------------------- | ------------------------ |
-| `feature/` | Funcionalidade nova           | `feature/github-cards`   |
-| `fix/`     | Correção                      | `fix/form-double-submit` |
-| `docs/`    | Só documentação               | `docs/readme-deploy`     |
-| `chore/`   | Config, dependências, tooling | `chore/husky-setup`      |
-| `style/`   | Visual sem mudar lógica       | `style/hero-typography`  |
-| `test/`    | Só testes                     | `test/dashboard-guard`   |
+| Prefixo     | Uso                                    | Exemplo                       |
+| ----------- | -------------------------------------- | ----------------------------- |
+| `feature/`  | Funcionalidade nova                    | `feature/github-cards`        |
+| `fix/`      | Correção                               | `fix/form-double-submit`      |
+| `refactor/` | Reestruturação sem mudar comportamento | `refactor/contact-card-hooks` |
+| `docs/`     | Só documentação                        | `docs/readme-deploy`          |
+| `chore/`    | Config, dependências, tooling          | `chore/husky-setup`           |
+| `style/`    | Visual sem mudar lógica                | `style/hero-typography`       |
+| `test/`     | Só testes                              | `test/dashboard-guard`        |
 
 - Nome em kebab-case, curto e descritivo.
 - A branch volta para a `main` por **pull request** com o CI verde. Depois do merge, apague a branch.
