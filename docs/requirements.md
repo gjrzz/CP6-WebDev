@@ -14,7 +14,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 - ✅ Link individual para cada projeto (`/projetos/:slug`)
 - ✅ Página amigável para rota inexistente (404), inclusive para repositório inexistente em `/projetos/:slug`
 - 🟨 Página amigável para falha no carregamento da API (`ErrorState` com retry na home e na página do projeto)
-- ⬜ Link compartilhado abre direto na página certa, inclusive com F5 (`vercel.json` com rewrite)
+- ✅ Link compartilhado abre direto na página certa, inclusive com F5 (`vercel.json` com rewrite; testado em produção)
 
 ## 2. Estados de carregamento
 
@@ -31,7 +31,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 ## 4. Formulário de contato
 
 - ✅ Validação por campo com mensagem específica (ex.: "e-mail inválido", "mínimo 20 caracteres")
-- 🟨 Mensagem enviada por e-mail ao dono **e** salva para consulta no dashboard — código pronto e testado com mocks; falta testar com as chaves reais (Supabase + EmailJS)
+- ✅ Mensagem enviada por e-mail ao dono **e** salva para consulta no dashboard (testado em produção com Supabase + EmailJS)
 - ✅ Feedback de sucesso ou erro após o envio
 
 ## 5. Dashboard do dono
@@ -46,7 +46,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 ## 7. Interface
 
-- ⬜ Layout responsivo testado em celular e desktop
+- 🟨 Layout responsivo testado em celular e desktop — testado no celular; corrigida a ordem do hero (cargos escondidos atrás da foto); conferir de novo após o deploy
 - 🟨 Componentes visuais reaproveitados (mesmo botão, mesmo card em todas as páginas)
 - 🟨 Identidade visual própria (ver `docs/design.md`) — hero tipográfico, caderno de projetos, bancada carimbada, cartão de contato, fontes, animações de entrada e detalhes da rolagem prontos; faltam as fotos do hero, da bancada e da mão
 
@@ -66,8 +66,8 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 ## 10. Deploy
 
-- ⬜ Site publicado com URL pública
-- ⬜ Deploy automático a cada push na `main` (integração Vercel ↔ GitHub)
+- ✅ Site publicado com URL pública
+- ✅ Deploy automático a cada push na `main` (integração Vercel ↔ GitHub)
 
 ## 11. Versionamento
 
