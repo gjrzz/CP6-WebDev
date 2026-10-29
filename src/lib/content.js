@@ -57,13 +57,10 @@ export const NOTEBOOK = {
 };
 
 export const WORKBENCH = {
-  // Só o tapete com objetos, sem a folha: a folha é CSS (ver README, seção "Imagens")
-  photo: {
-    name: 'bancada',
-    alt: 'Tapete antiestático visto de cima, com ferramentas',
-    width: 1600,
-    height: 900,
-  },
+  // Fundo de blueprint azul quadriculado, repetido atrás da folha (a folha é CSS). A imagem
+  // gerada é um ladrilho espelhado 2×2 da foto original, para repetir sem emenda (ver
+  // README, seção "Imagens").
+  blueprint: { name: 'bancada', tileWidth: '1280px' },
   // Carimbadas uma por linha, letra por letra
   words: ['tools', 'automations', 'systems'],
   stack: [

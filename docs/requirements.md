@@ -48,12 +48,12 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 - 🟨 Layout responsivo testado em celular e desktop — testado no celular; corrigida a ordem do hero (cargos escondidos atrás da foto); conferir de novo após o deploy
 - 🟨 Componentes visuais reaproveitados (mesmo botão, mesmo card em todas as páginas)
-- 🟨 Identidade visual própria (ver `docs/design.md`) — hero tipográfico, caderno de projetos, bancada carimbada, cartão de contato, fontes, animações de entrada e detalhes da rolagem e mão entregando o cartão prontos; falta a foto da bancada
+- ✅ Identidade visual própria (ver `docs/design.md`) — hero tipográfico, caderno de projetos, bancada carimbada sobre blueprint, cartão de contato com a mão, fontes, animações de entrada e detalhes da rolagem
 
 ## 8. Performance
 
 - ✅ Lighthouse mobile ≥ 80 em performance — produção: medianas de 5 rodadas 85 antes e 85/87 depois da `perf/lighthouse`; o efeito das mudanças ficou dentro do ruído da medição (decisão 22)
-- 🟨 Imagens otimizadas (WebP/AVIF, tamanho certo, lazy) — pipeline e `Picture` prontos; faltam as fotos
+- ✅ Imagens otimizadas (WebP/AVIF, tamanho certo, lazy) — todas as fotos geradas pelo pipeline e servidas pelo `Picture`; o blueprint da bancada é fundo CSS em AVIF/WebP com `image-set`, baixado só quando a seção é desenhada
 - ✅ Dashboard e elementos pesados carregados sob demanda (`React.lazy`): login, dashboard, formulário, Supabase e EmailJS em chunks próprios (decisões 19 e 20)
 - ✅ Sem saltos de layout (CLS): 0 em todas as medições do Lighthouse (skeletons do tamanho do conteúdo, molduras com proporção fixa)
 - ✅ Sem requisições repetidas à API do GitHub ao navegar (cache do TanStack Query + `localStorage`; a página do projeto reaproveita a listagem)

@@ -1,8 +1,8 @@
-import Picture from '@/components/ui/Picture';
 import Reveal from '@/components/ui/Reveal';
 import ScrollStroke from '@/components/ui/ScrollStroke';
 import StampedWord from '@/components/ui/StampedWord';
 import { WORKBENCH } from '@/lib/content';
+import { getLargestImage } from '@/lib/images';
 
 // Rótulo pequeno de cada bloco da folha
 function Label({ children }) {
@@ -93,7 +93,14 @@ function Background() {
 }
 
 export default function Workbench() {
-  const { photo, words } = WORKBENCH;
+  const { blueprint, words } = WORKBENCH;
+  const tile = getLargestImage(blueprint.name);
+  // AVIF onde o navegador aceita; WebP nos demais
+  const tileImage =
+    tile &&
+    (tile.avif
+      ? `image-set(url(${tile.avif}) type("image/avif"), url(${tile.webp}) type("image/webp"))`
+      : `url(${tile.webp})`);
 
   return (
     <section
@@ -109,15 +116,14 @@ export default function Workbench() {
 
         {/* No desktop, a folha fica sobre a foto do tapete; no celular, só a folha */}
         <div className="relative lg:overflow-hidden lg:rounded-3xl lg:px-16 lg:py-20">
-          <div className="hidden lg:block">
-            <Picture
-              name={photo.name}
-              alt={photo.alt}
-              width={photo.width}
-              height={photo.height}
-              sizes="(min-width: 1152px) 1088px, 100vw"
-              cover
-            />
+          {/* Blueprint repetido perto do tamanho original (a grade fica fina e nítida),
+              escurecido para não brigar com o fundo do site. Decorativo: fora do leitor de tela. */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 hidden lg:block"
+            style={tileImage && { backgroundImage: tileImage, backgroundSize: blueprint.tileWidth }}
+          >
+            <div className="bg-page-ink/45 absolute inset-0" />
           </div>
 
           {/* Folha em CSS: cor de papel fixa nos dois temas, levemente torta sobre o tapete */}
