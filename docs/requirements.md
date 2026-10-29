@@ -52,7 +52,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 ## 8. Performance
 
-- ✅ Lighthouse mobile ≥ 80 em performance — produção (`main`): mediana 85; depois da `perf/lighthouse`, +10 pontos e TBT de 431 → 142 ms na comparação local (decisão 22)
+- ✅ Lighthouse mobile ≥ 80 em performance — produção: medianas de 5 rodadas 85 antes e 85/87 depois da `perf/lighthouse`; o efeito das mudanças ficou dentro do ruído da medição (decisão 22)
 - 🟨 Imagens otimizadas (WebP/AVIF, tamanho certo, lazy) — pipeline e `Picture` prontos; faltam as fotos
 - ✅ Dashboard e elementos pesados carregados sob demanda (`React.lazy`): login, dashboard, formulário, Supabase e EmailJS em chunks próprios (decisões 19 e 20)
 - ✅ Sem saltos de layout (CLS): 0 em todas as medições do Lighthouse (skeletons do tamanho do conteúdo, molduras com proporção fixa)
