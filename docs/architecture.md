@@ -24,8 +24,8 @@ src/
 ├── app/            # App.jsx (providers) e router.jsx (definição das rotas)
 ├── pages/          # Uma página por rota. Monta a tela com components + hooks.
 ├── components/
-│   ├── ui/         # Peças genéricas e reaproveitáveis: Button, Card, Skeleton, Input…
-│   ├── layout/     # Estrutura comum: RootLayout, Header, Footer, AuthLayout, ProtectedRoute
+│   ├── ui/         # Peças genéricas e reaproveitáveis: Button, TextButton, Card, Skeleton, Input…
+│   ├── layout/     # Estrutura comum: RootLayout, Header, Footer, AuthLayout, ProtectedRoute, StatusPage
 │   ├── sections/   # Blocos grandes da home: Hero, ProjectsNotebook, Workbench, ContactCard
 │   ├── dashboard/  # Blocos do dashboard: MessagesPanel, MessageItem, FeaturedPanel
 │   └── decor/      # Decoração da rolagem (aria-hidden): SkateProgress, TapeBand, Sticker, SectionBreak
