@@ -134,8 +134,8 @@ O projeto é desenvolvido com **Claude Code**. Tudo que orienta a IA está versi
 | Arquivo                                          | Papel                                                                                                  |
 | ------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | [`CLAUDE.md`](CLAUDE.md)                         | Instruções do projeto: regras inegociáveis, comandos e importação dos docs                             |
-| [`docs/`](docs)                                  | Requisitos (checklist do CP), arquitetura, convenções, design e decisões                               |
-| [`.claude/settings.json`](.claude/settings.json) | Permissões (bloqueia ler `.env` e `push --force`) e hooks                                              |
+| [`docs/`](docs)                                  | Requisitos (checklist do CP), arquitetura, convenções, design, decisões e roteiro do vídeo             |
+| [`.claude/settings.json`](.claude/settings.json) | Permissões (bloqueia ler `.env` e rodar `git add`/`commit`/`push`: os commits são meus) e hooks        |
 | [`.claude/hooks/`](.claude/hooks)                | `guard-main` impede commit/push na `main`; `format-file` roda Prettier + ESLint a cada arquivo editado |
 | [`.claude/skills/`](.claude/skills)              | `/feature`, `/commit` e `/component`: fluxos padronizados                                              |
 | [`.claude/agents/`](.claude/agents)              | `code-reviewer` e `requirements-checker`                                                               |
