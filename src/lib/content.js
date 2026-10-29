@@ -6,6 +6,9 @@ export const HERO = {
   // Moldura das fotos (paisagem, como a referência). Cada foto preenche a moldura cortando as
   // sobras (object-fit: cover); `focus` é o ponto que fica visível no corte.
   frame: { width: 4, height: 3 },
+  // Largura de exibição da moldura (atributo sizes). Também usada no preload da 1ª foto,
+  // injetado no build pelo vite.config.js: os dois precisam bater
+  photoSizes: '(min-width: 1024px) 32rem, (min-width: 640px) 24rem, 18rem',
   // width/height são os tamanhos reais dos originais em src/assets/raw (atributos do <img>)
   photos: [
     {
