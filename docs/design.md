@@ -8,7 +8,7 @@ Portfólio editorial de fundo escuro, com **objetos reais fotografados** como me
 
 1. **Hero:** frase tipográfica montada com estilos mistos — "Gabriel is a São Paulo-based IT Analyst and developer, who builds tools, automations and systems." Cargo na vertical. No centro, uma foto que troca em crossfade (skate, trabalho, setup).
 2. **Caderno / shape com stickers:** objeto coberto de adesivos. Ao clicar, abre e mostra os projetos vindos do GitHub (os destaques primeiro). Cada projeto leva a `/projetos/:slug`.
-3. **Bancada:** tapete antiestático com uma folha de papel onde palavras são "carimbadas" letra por letra, cada letra numa fonte diferente (gótica, bubble, pincel), e o traço aparece no scroll. Mostra stack e experiência.
+3. **Bancada:** folha de papel sobre um blueprint azul (escurecido para conversar com o fundo), onde palavras são "carimbadas" letra por letra, cada letra numa fonte diferente (gótica, bubble, pincel), e o traço aparece no scroll. Mostra stack e experiência.
 4. **Contato:** mão segurando um cartão "Let's build something". Ao clicar, o cartão vira e mostra o formulário.
 5. **Rodapé:** links em formato de path (`/github/`, `/in/`, `/mail/`, `/cv/`).
 
