@@ -13,7 +13,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 
 - ✅ Link individual para cada projeto (`/projetos/:slug`)
 - ✅ Página amigável para rota inexistente (404), inclusive para repositório inexistente em `/projetos/:slug`
-- 🟨 Página amigável para falha no carregamento da API (`ErrorState` com retry na home e na página do projeto)
+- ✅ Página amigável para falha no carregamento da API (`ErrorState` com retry na home e na página do projeto; no caderno aberto, mensagem na página com "tentar de novo")
 - ✅ Link compartilhado abre direto na página certa, inclusive com F5 (`vercel.json` com rewrite; testado em produção)
 
 ## 2. Estados de carregamento
@@ -47,7 +47,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 ## 7. Interface
 
 - 🟨 Layout responsivo testado em celular e desktop — testado no celular; corrigida a ordem do hero (cargos escondidos atrás da foto); conferir de novo após o deploy
-- 🟨 Componentes visuais reaproveitados (mesmo botão, mesmo card em todas as páginas)
+- ✅ Componentes visuais reaproveitados: `Button`, `Card` e `TextButton` (ações em texto: "ver mais", "fechar caderno", "tentar de novo") em todas as páginas; 404 e erro de rota usam o mesmo `StatusPage`
 - ✅ Identidade visual própria (ver `docs/design.md`) — hero tipográfico, caderno de projetos, bancada carimbada sobre blueprint, cartão de contato com a mão, fontes, animações de entrada e detalhes da rolagem
 
 ## 8. Performance
@@ -79,7 +79,7 @@ Status: ⬜ não iniciado · 🟨 em andamento · ✅ concluído. Atualize ao te
 ## 12. Arquitetura e padronização
 
 - ✅ Estrutura de pastas com responsabilidades claras
-- ⬜ Componentes pequenos, lógica em hooks/services (manter durante o projeto)
+- 🟨 Componentes pequenos, lógica em hooks/services: páginas abaixo de 65 linhas, `useQuery`/`useMutation` só em `hooks/`, `fetch` só em `services/`; falta quebrar `Hero` e `ContactCard`
 - ✅ Convenções de nomenclatura documentadas
 - ✅ Lint e formatação antes de cada commit (Husky + lint-staged)
 

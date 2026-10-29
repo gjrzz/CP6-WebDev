@@ -3,6 +3,7 @@ import { AnimatePresence, m, useReducedMotion } from 'motion/react';
 import ProjectCard from '@/components/ui/ProjectCard';
 import ProjectCardSkeleton from '@/components/ui/ProjectCardSkeleton';
 import Reveal from '@/components/ui/Reveal';
+import TextButton from '@/components/ui/TextButton';
 import NotebookCover from '@/components/sections/NotebookCover';
 import NotebookPages from '@/components/sections/NotebookPages';
 import NotebookSpread, {
@@ -67,13 +68,9 @@ function OpenNotebook({ query, reduced, onClose }) {
       className="relative outline-none"
     >
       {/* Sobre a margem transparente da foto: o caderno aberto fica na mesma posição da capa */}
-      <button
-        type="button"
-        onClick={onClose}
-        className="text-muted hover:text-paper focus-visible:outline-accent absolute top-0 right-0 z-10 rounded font-mono text-xs underline underline-offset-4 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4"
-      >
+      <TextButton onClick={onClose} className="absolute top-0 right-0 z-10 transition-colors">
         fechar caderno
-      </button>
+      </TextButton>
       <ProjectsStates
         query={query}
         skeleton={spreadSkeleton}
