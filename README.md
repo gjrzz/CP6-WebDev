@@ -66,14 +66,15 @@ As fotos do hero podem ter proporções diferentes: elas aparecem numa moldura 4
 
 ## Scripts
 
-| Script                            | Descrição                            |
-| --------------------------------- | ------------------------------------ |
-| `npm run dev`                     | Servidor de desenvolvimento          |
-| `npm run build` / `preview`       | Build de produção e pré-visualização |
-| `npm run lint` / `lint:fix`       | ESLint                               |
-| `npm run format` / `format:check` | Prettier                             |
-| `npm test` / `test:watch`         | Testes com Vitest                    |
-| `npm run images`                  | Gera AVIF/WebP de `src/assets/raw`   |
+| Script                            | Descrição                                   |
+| --------------------------------- | ------------------------------------------- |
+| `npm run dev`                     | Servidor de desenvolvimento                 |
+| `npm run build` / `preview`       | Build de produção e pré-visualização        |
+| `npm run lint` / `lint:fix`       | ESLint                                      |
+| `npm run format` / `format:check` | Prettier                                    |
+| `npm test` / `test:watch`         | Testes com Vitest                           |
+| `npm run analyze`                 | Build + mapa do bundle em `dist/stats.html` |
+| `npm run images`                  | Gera AVIF/WebP de `src/assets/raw`          |
 
 ## Arquitetura
 
