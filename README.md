@@ -5,7 +5,16 @@ Portfólio pessoal em React com projetos carregados direto do GitHub, formulári
 > Checkpoint 3 de Web Development (FIAP) — **Stack e Harness Engineering**.
 
 - **Site:** https://gabrieljuarez.vercel.app
+- **Repositório:** https://github.com/gjrzz/CP6-WebDev
 - **Vídeo:** _link do YouTube (não listado)_
+
+## O que tem no site
+
+- **Home em quatro cenas:** hero tipográfico com fotos em crossfade, caderno com adesivos que abre e mostra os projetos, bancada com a stack "carimbada" sobre um blueprint e um cartão de contato que vira para mostrar o formulário.
+- **Projetos do GitHub:** carregados pela API, sem cadastro manual, com descrição, linguagem e data da última atualização. Cada um tem sua página em `/projetos/:slug`. Os estados de carregando, erro e lista vazia aparecem na tela, e o site trata o limite de requisições da API usando cache.
+- **Contato:** validação por campo, envio por e-mail ao dono (EmailJS) e mensagem salva no Supabase.
+- **Dashboard privado** (`/dashboard`): login, lista de mensagens com filtro e "marcar como respondida", e escolha dos projetos em destaque na home.
+- **Tema claro/escuro** salvo entre visitas, respeito a `prefers-reduced-motion` e página 404 amigável.
 
 ## Tecnologias
 
@@ -48,6 +57,7 @@ Enquanto uma foto não existe, o site mostra uma caixa vazia do mesmo tamanho, n
 | `notebook_opened.png` | Caderno aberto com páginas em branco, recortado                            | 11:6      | 1408 × 768      |
 | `bancada.png`         | Textura de blueprint, sem folha (a folha é CSS); vira ladrilho, ver abaixo | qualquer  | 640 de largura  |
 | `hand.png`            | Mão em pinça, recortada (o cartão entra entre o polegar e os dedos)        | 3:4       | 1200 × 1600     |
+| `pen.png`             | Caneta, recortada                                                          | 1:1       | 1024 × 1024     |
 
 O blueprint da bancada é repetido como fundo, então passa antes por um espelhamento 2×2 (para não aparecer emenda) e só depois pelo script de otimização. Gere só ele, numa pasta temporária, para não regerar as outras fotos:
 
@@ -93,17 +103,24 @@ Estrutura de pastas, fluxo de dados, rotas e nomenclatura: [`docs/architecture.m
 src/
 ├── app/         # providers e rotas
 ├── pages/       # uma por rota
-├── components/  # ui (genéricos), layout, sections (blocos da home)
-├── hooks/       # lógica e estado (TanStack Query)
+├── components/
+│   ├── ui/        # peças genéricas: Button, TextButton, Card, Skeleton…
+│   ├── layout/    # cabeçalho, rodapé, proteção de rota, páginas de aviso
+│   ├── sections/  # blocos da home: Hero, caderno, bancada, contato
+│   ├── dashboard/ # mensagens e destaques
+│   └── decor/     # decoração da rolagem (aria-hidden)
+├── hooks/       # lógica e estado (TanStack Query, animações de rolagem)
 ├── services/    # acesso a APIs, sem React
 ├── contexts/    # tema e autenticação
-├── lib/         # utilitários e schemas Zod
+├── lib/         # utilitários, conteúdo e schemas Zod
+├── assets/img/  # fotos geradas em AVIF/WebP
 └── styles/      # CSS global e tokens
 ```
 
 ## Padrões do projeto
 
-- **Branches:** GitHub Flow. `main` sempre publicável; trabalho em `feature/*`, `fix/*`, `docs/*`, `chore/*`, integrado por pull request com CI verde.
+- **Branches:** GitHub Flow. `main` sempre publicável e protegida (só entra por pull request com o CI verde); trabalho em `feature/*`, `fix/*`, `refactor/*`, `docs/*`, `chore/*`.
+- **CI:** GitHub Actions roda lint, Prettier, testes e build em cada PR. Cada merge na `main` vira deploy na Vercel.
 - **Commits:** [Conventional Commits](https://www.conventionalcommits.org/pt-br/) em português, verificados pelo commitlint (ex.: `feat(contato): adiciona validação por campo`).
 - **Código:** ESLint + Prettier aplicados em cada commit pelo Husky + lint-staged.
 - **Nomenclatura:** componentes em PascalCase, hooks começando com `use`, services em camelCase.
