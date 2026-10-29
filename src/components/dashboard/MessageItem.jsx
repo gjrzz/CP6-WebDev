@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
 import Tag from '@/components/ui/Tag';
+import TextButton from '@/components/ui/TextButton';
 import { formatDateTime } from '@/lib/formatDate';
 
 // Acima disso o texto passa de 2 linhas no card e ganha "ver mais"
@@ -19,12 +20,7 @@ export default function MessageItem({ message, onToggle, toggling = false }) {
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="min-w-0">
           <h3 className="font-display truncate text-xl">{name}</h3>
-          <a
-            href={reply}
-            className="text-muted hover:text-paper focus-visible:outline-accent rounded font-mono text-xs underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
-          >
-            {email}
-          </a>
+          <TextButton href={reply}>{email}</TextButton>
         </div>
         <Tag variant={answered ? 'default' : 'accent'}>{answered ? 'respondida' : 'pendente'}</Tag>
       </div>
@@ -33,15 +29,14 @@ export default function MessageItem({ message, onToggle, toggling = false }) {
         {text}
       </p>
       {text.length > LONG_MESSAGE && (
-        <button
-          type="button"
+        <TextButton
           aria-expanded={expanded}
           aria-controls={textId}
           onClick={() => setExpanded((value) => !value)}
-          className="text-muted hover:text-paper focus-visible:outline-accent self-start rounded font-mono text-xs underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
+          className="self-start"
         >
           {expanded ? 'ver menos' : 'ver mais'}
-        </button>
+        </TextButton>
       )}
 
       <div className="flex flex-wrap items-center justify-between gap-3">

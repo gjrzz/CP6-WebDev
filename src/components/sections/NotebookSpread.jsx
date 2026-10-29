@@ -1,4 +1,5 @@
 import Picture from '@/components/ui/Picture';
+import TextButton from '@/components/ui/TextButton';
 import { NOTEBOOK } from '@/lib/content';
 
 // Caderno aberto: a foto é o fundo e o conteúdo fica sobre as páginas, posicionado em %
@@ -54,13 +55,9 @@ export function NotebookMessage({ title, message, onRetry, role }) {
       <p className="font-display text-2xl italic">{title}</p>
       {message && <p className="text-page-muted text-sm">{message}</p>}
       {onRetry && (
-        <button
-          type="button"
-          onClick={onRetry}
-          className="decoration-page-highlight focus-visible:outline-page-ink self-start rounded font-mono text-sm underline decoration-2 underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4"
-        >
+        <TextButton tone="page" onClick={onRetry} className="self-start">
           tentar de novo
-        </button>
+        </TextButton>
       )}
     </div>
   );
