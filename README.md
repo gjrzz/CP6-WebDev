@@ -47,7 +47,7 @@ Enquanto uma foto não existe, o site mostra uma caixa vazia do mesmo tamanho, n
 | `notebook_closed.png` | Capa do caderno com adesivos, recortada                                         | 11:6      | 1408 × 768      |
 | `notebook_opened.png` | Caderno aberto com páginas em branco, recortado                                 | 11:6      | 1408 × 768      |
 | `bancada.jpg`         | Tapete antiestático visto de cima com 2 ou 3 objetos, sem folha (a folha é CSS) | 16:9      | 1280 × 720      |
-| `mao-cartao.png`      | Mão segurando o cartão em branco, recortada                                     | 4:5       | 1280 × 1600     |
+| `hand.png`            | Mão em pinça, recortada (o cartão entra entre o polegar e os dedos)             | 3:4       | 1200 × 1600     |
 
 As fotos do hero podem ter proporções diferentes: elas aparecem numa moldura 4:3, cortadas no ponto de foco de cada uma (`HERO.photos[].focus` em `src/lib/content.js`, ex.: `'50% 40%'`). Ao trocar uma foto, atualize lá também o `width`/`height` dela. As duas fotos do caderno, ao contrário, precisam ter a mesma proporção, que trocam de lugar ao abrir. Os projetos são escritos sobre as páginas do `notebook_opened.png` em posições definidas em porcentagem (`NOTEBOOK.pages` em `src/lib/content.js`): se essa foto mudar, ajuste lá.
 

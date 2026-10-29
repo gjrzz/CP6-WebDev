@@ -126,12 +126,16 @@ export const WORKBENCH = {
 };
 
 export const CONTACT = {
-  // Mão segurando o cartão em branco, recortada; o texto do cartão é código
-  photo: {
-    name: 'mao-cartao',
-    alt: 'Mão segurando um cartão',
-    width: 1280,
+  // Mão em pinça, recortada; o cartão (código) entra entre o polegar e os dedos.
+  // Na foto, a mão termina num corte reto onde estava o papel; acima dele, só o polegar.
+  hand: {
+    name: 'hand',
+    alt: 'Minha mão entregando o cartão de contato',
+    width: 1200,
     height: 1600,
+    // Ponto da pinça em fração da foto: `y` é a altura do corte reto, que encosta na borda
+    // de baixo do cartão. Se a foto mudar, ajuste.
+    pinch: { x: 0.5, y: 0.455 },
   },
   // Caneta apoiada no canto do cartão (decorativa: alt vazio)
   pen: { name: 'pen', width: 1024, height: 1024 },
