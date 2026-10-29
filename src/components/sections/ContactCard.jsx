@@ -98,7 +98,12 @@ export default function ContactCard() {
   };
 
   return (
-    <section id="contato" aria-labelledby="contato-titulo" className="w-full overflow-x-clip">
+    <section
+      id="contato"
+      aria-labelledby="contato-titulo"
+      className="below-fold w-full overflow-x-clip"
+      style={{ containIntrinsicSize: 'auto 900px' }}
+    >
       <div className="mx-auto max-w-6xl px-4 py-16 md:px-8">
         <h2 id="contato-titulo" className="font-display mb-8 text-3xl italic">
           Contato
