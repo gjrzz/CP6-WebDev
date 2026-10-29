@@ -12,7 +12,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "prepare": "husky",
-    "images": "node scripts/optimize-images.mjs"
+    "images": "node scripts/optimize-images.mjs",
+    "analyze": "vite build --mode analyze"
   },
   "dependencies": {
     "@emailjs/browser": "^5.0.3",
@@ -50,6 +51,7 @@
     "lint-staged": "^17.6.0",
     "prettier": "^3.9.10",
     "prettier-plugin-tailwindcss": "^0.8.1",
+    "rollup-plugin-visualizer": "^7.1.1",
     "sharp": "^0.35.5",
     "tailwindcss": "^4.3.3",
     "vite": "^8.3.5",
